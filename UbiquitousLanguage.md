@@ -77,16 +77,6 @@
       </td>
     </tr>
     <tr>
-      <td><strong>Photo Gallery 📸</strong></td>
-      <td>A collection of images and videos from the wedding, accessible to guests after the event.</td>
-      <td>
-        <ul>
-          <li>In UI: "Photo Gallery" section (accessible after the wedding)</li>
-          <li>In conversation: "We'll upload the photos to the Photo Gallery after the wedding."</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
       <td><strong>Chatbot 🤖</strong></td>
       <td>An AI-powered conversational interface that answers guest questions about the wedding.</td>
       <td>

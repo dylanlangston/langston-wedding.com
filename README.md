@@ -26,7 +26,7 @@ This wedding website aims to provide a seamless and interactive experience for g
 
 - **RSVP Page 📅:** Guests can RSVP via an API integrated with Google Sheets.
 - **About Us 💑:** Detailed information about the couple and their story.
-- **Wedding Party 👰🤵:** Introductions and pictures of the bridal party.
+- **Wedding Party 👰🤵:** Introductions and pictures of the wedding party.
 - **Guest Accommodations 🛌:** Links and information about hotels and lodging options.
 - **Venue 📍:** Venue address, timings, and map integration.
 - **Contact Information 📞:** Easy access to contact details for the couple.
@@ -36,11 +36,11 @@ This wedding website aims to provide a seamless and interactive experience for g
 
 ## Implementation Details ⚙️
 
-- **Frontend 🎨:** React with Material Design for a modern and responsive user interface. This choice leverages the popularity and component-based structure of React, combined with the aesthetic and accessibility benefits of Material Design. 
-- **Backend ☁️:** Serverless architecture on Azure, potentially using Azure Functions for their event-driven nature, scalability, and cost-effectiveness. Cosmos DB is another potential candidate for its flexibility in handling semi-structured data and its seamless integration with Azure Functions. 
-- **Database 📈:** Google Sheets will store RSVP data due to its ease of use and integration capabilities, allowing for quick setup and data management. Other website data might be stored in Cosmos DB, taking advantage of its scalability and integration with the Azure ecosystem.
-- **CI/CD 🚀:** GitHub Actions will automate the build, testing, and deployment processes, streamlining the development workflow and ensuring code quality.
-- **Chatbot 🤖:** Azure OpenAI, with its advanced natural language processing capabilities, will power the chatbot functionality, providing guests with intelligent and relevant responses to their queries.
+- **Frontend 🎨:** [React](https://react.dev/) with [Material UI](https://mui.com/material-ui/). This choice leverages the popularity and component-based structure of React, combined with the aesthetic and accessibility benefits of Material Design. 
+- **Backend ☁️:** Serverless architecture on [Azure](https://azure.microsoft.com/en-us), using Azure Functions for their event-driven nature, scalability, and cost-effectiveness.
+- **Database 📈:** [Google Sheets](https://www.google.com/sheets/about/) will store RSVP data due to its ease of use and integration capabilities, allowing for quick setup and data management. Other website data might be stored in [Cosmos DB](https://azure.microsoft.com/en-us/products/cosmos-db/), taking advantage of its scalability and integration with the Azure ecosystem.
+- **CI/CD 🚀:** [GitHub Actions](https://github.com/features/actions) will automate the build, testing, and deployment processes, streamlining the development workflow and ensuring code quality.
+- **Chatbot 🤖:** [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service), with its advanced natural language processing capabilities, will power the chatbot functionality, providing guests with intelligent and relevant responses to their queries.
 
 ## DDD in Action 🛠️
 
@@ -303,8 +303,6 @@ While DDD offers numerous benefits, applying it to a relatively simple project l
 
 ## License 📜
 This repo is licensed under the [MIT License](https://opensource.org/licenses/MIT). See the [`LICENSE`](LICENSE) file for details.
-
-[^local-development]: For local development check out [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) and [DevPod](https://devpod.sh/).
 
 <h2 id="footer"></h2>
 <sub>
