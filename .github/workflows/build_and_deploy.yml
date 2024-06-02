@@ -35,8 +35,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Install Azure CLI
+        uses: azure/setup-cli@main
       - name: Deploy to Azure Storage
-        uses: azure/storage-blob-upload@main
-        with: 
-          source_dir: ./dist 
-          connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }} 
+        run: |
+          az storage blob upload-batch -d '$web' -s dist --overwrite --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
