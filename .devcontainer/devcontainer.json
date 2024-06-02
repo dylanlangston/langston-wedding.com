@@ -1,0 +1,23 @@
+{
+	"name": "langston-wedding.com",
+	"build": { 
+		"dockerfile": "devcontainer.Dockerfile",
+		"target": "base",
+		"context": ".."
+	},
+	"containerUser": "vscode",
+	"postCreateCommand": "",
+	"runArgs": ["--volume=/var/lib/docker", "--privileged"],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-azuretools.vscode-docker",
+				"ms-vscode-remote.remote-containers",
+				"bierner.markdown-mermaid",
+                "bierner.markdown-preview-github-styles"
+			],
+			"settings": {
+			}
+		}
+	}
+}
