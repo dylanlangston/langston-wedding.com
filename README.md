@@ -12,6 +12,12 @@
     This project aims to build a modern wedding website using Domain-Driven Design (DDD) principles. <br/><u>🚧 Currently under construction. 🚧</u>
 </p>
 
+<p align="center">
+  <a href="https://github.com/dylanlangston/langston-wedding.com/actions/workflows/test.yml"><img alt="GitHub Test Workflow" src="https://img.shields.io/github/actions/workflow/status/dylanlangston/langston-wedding.com/test.yml?label=Testing&style=flat-square"></a>
+  <a href="https://github.com/dylanlangston/dylanlangston/blob/master/LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/dylanlangston/dylanlangston?style=flat-square&label=License"></a>
+  <a href="https://api.github.com/repos/dylanlangston/langston-wedding.com"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/dylanlangston/langston-wedding.com?label=Repo%20Size&style=flat-square"></a>
+</p>
+
 <details> 
   <summary>What is <b>Domain-Driven Design? ...</b></summary>
   <p align="center">Domain-Driven Design (DDD) is a software development approach that emphasizes understanding and modeling the core business domain, ensuring that the software accurately reflects the real-world concepts and logic. Instead of focusing solely on technical concerns, DDD prioritizes aligning the software's design with the business domain, leading to a more maintainable, flexible, and understandable codebase.</p> 
