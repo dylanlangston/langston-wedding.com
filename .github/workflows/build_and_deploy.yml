@@ -36,7 +36,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Deploy to Azure Storage
-        uses: azure/cli@main
+        uses: azure/cli@master
         with:
           azcliversion: latest
           inlineScript: |
