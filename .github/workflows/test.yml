@@ -1,5 +1,7 @@
 name: Unit and Integration Testing
 
+run-name: Testing on push by @${{ github.actor }}
+
 on:
   push:
     branches:
