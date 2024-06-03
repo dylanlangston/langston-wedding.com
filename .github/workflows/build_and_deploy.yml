@@ -35,9 +35,9 @@ jobs:
         with:
           name: build-artifact
           path: dist
-    - name: Deploy to Azure Storage
-      uses: azure/cli@main
-      with:
-        azcliversion: latest
-        inlineScript: |
-          az storage blob upload-batch -d '$web' -s dist --overwrite --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
+      - name: Deploy to Azure Storage
+        uses: azure/cli@main
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch -d '$web' -s dist --overwrite --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
