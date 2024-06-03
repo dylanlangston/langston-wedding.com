@@ -42,7 +42,7 @@ This wedding website aims to provide a seamless and interactive experience for g
 
 ## Implementation Details ⚙️
 
-- **Frontend 🎨:** [React](https://react.dev/) with [Material UI](https://mui.com/material-ui/). This choice leverages the popularity and component-based structure of React, combined with the aesthetic and accessibility benefits of Material Design. 
+- **Frontend 🎨:** [React](https://react.dev/) with [MUI - Material UI](https://mui.com/material-ui/). This choice leverages the popularity and component-based structure of React, combined with the aesthetic and accessibility benefits of Material Design. 
 - **Backend ☁️:** Serverless architecture on [Azure](https://azure.microsoft.com/en-us), using Azure Functions for their event-driven nature, scalability, and cost-effectiveness.
 - **Database 📈:** [Google Sheets](https://www.google.com/sheets/about/) will store RSVP data due to its ease of use and integration capabilities, allowing for quick setup and data management. Other website data might be stored in [Cosmos DB](https://azure.microsoft.com/en-us/products/cosmos-db/), taking advantage of its scalability and integration with the Azure ecosystem.
 - **CI/CD 🚀:** [GitHub Actions](https://github.com/features/actions) will automate the build, testing, and deployment processes, streamlining the development workflow and ensuring code quality.
