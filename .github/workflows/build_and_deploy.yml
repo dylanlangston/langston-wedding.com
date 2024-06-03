@@ -42,4 +42,4 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch -d '$web' -s dist --overwrite --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
+            az storage blob upload-batch -d '$web' -s dist --overwrite -o none --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
