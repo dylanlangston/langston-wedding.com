@@ -1,3 +1,7 @@
+## Wedding Website - Ubiquitous Language 🗣️
+
+This document outlines the shared vocabulary used in the development and discussion of the wedding website. Aligning our language between developers and domain experts (in this case, those involved in planning the wedding) is crucial for the success of Domain-Driven Design (DDD). By establishing a ubiquitous language, we ensure everyone uses the same terminology, reducing misunderstandings and making the codebase more accessible and maintainable.
+
 <table>
   <thead>
     <tr>

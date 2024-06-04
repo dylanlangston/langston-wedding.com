@@ -257,6 +257,9 @@ stateDiagram-v2
     Error --> Ready : Error resolved
 ```
 
+## Design Mockups 🖼️
+For a visual representation of the website's design and layout, please refer to the [Mockups](./Mockups.md) Document.
+
 ## Challenges and Considerations 🤔
 
 While DDD offers numerous benefits, applying it to a relatively simple project like this wedding website comes with some considerations:
