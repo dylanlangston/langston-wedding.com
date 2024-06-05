@@ -22,6 +22,7 @@
   <summary>What is <b>Domain-Driven Design? ...</b></summary>
   <p align="center">Domain-Driven Design (DDD) is a software development approach that emphasizes understanding and modeling the core business domain, ensuring that the software accurately reflects the real-world concepts and logic. Instead of focusing solely on technical concerns, DDD prioritizes aligning the software's design with the business domain, leading to a more maintainable, flexible, and understandable codebase.</p> 
   <p align="center"><strong>While DDD is typically recommended for larger, complex projects with multiple teams and stakeholders, this project serves as a personal learning exercise and a fun application of DDD concepts in a real-world scenario.</strong></p>
+  <p align="center"><i>Mantra: The tendecy towards perfectionism underminds attempts to do good design.</i></p>
 </details>
 
 <hr/>
@@ -39,8 +40,6 @@ This wedding website aims to provide a seamless and interactive experience for g
 - **Gift Registry 🎁:** Links to gift registry services.
 - **Post-Wedding 🎉:** Thank you message, photo gallery, and video links.
 - **Chatbot 🤖:** An AI-powered chatbot (using Azure OpenAI) to answer guest questions about various aspects of the wedding.
-
-*Mantra: The tendecy towards perfectionism underminds attempts to do good design.*
 
 ## Implementation Details ⚙️
 
