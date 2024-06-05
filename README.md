@@ -68,7 +68,7 @@ This project uses DDD to structure the codebase, enhance maintainability, and al
     <td>
       <details>
         <summary><h4>Bounded Contexts 📏</h4></summary>
-        <p>We do not have multiple subdomains but can still use bounded context to manage complexity and maintain a clear separation of concerns. Each bounded context represents a specific area of the application with its own domain model, ensuring that changes within one context have minimal impact on others.</p>
+        <p>We do not have multiple subdomains but can still use bounded context to manage complexity and maintain a clear separation of concerns. Each bounded context represents a specific area of the application with its own domain model, ensuring that changes within one context have minimal impact on others. Our bounded context use a shared kernel which means they share the same language and their models when interacting with a different bound context in the same domain.</p>
         <p>Here are examples of bounded contexts within our wedding website:</p>
         <ul>
           <li><b>Wedding Information 📝:</b> This context focuses on managing the core details of the Wedding Event. This includes information like the date and time of the wedding, the location of the ceremony and reception, and any other essential details guests need to know. The Wedding Event Aggregate will likely reside within this bounded context.</li>
