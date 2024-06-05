@@ -49,11 +49,6 @@ jobs:
       with:
         name: build-artifact
         path: dist
-    - name: Setup GitGub Pages
-      uses: actions/configure-pages@main
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@main
       
   deployGithubPages:
     if: ${{ success() || needs.Build.result == 'success' }}
@@ -70,6 +65,5 @@ jobs:
     needs: build
     secrets: inherit
     permissions:
-      contents: read
-      pages: write
-      id-token: write
+      packages: read
+      contents: write
