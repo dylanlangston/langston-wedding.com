@@ -204,7 +204,7 @@ erDiagram
     VENUE {
         UUID id
         string name
-        string address
+        Address address
         string link
     }
     GUEST {
