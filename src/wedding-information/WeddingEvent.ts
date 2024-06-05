@@ -1,25 +1,21 @@
-export interface WeddingEvent {
+import { Entity } from "../shared/Entity";
+import { IVenue, Venue } from "./Venue";
+
+export interface IWeddingEvent {
+    readonly id: string;
     title: string;
     description?: string;
     date: Date;
-    venue: Venue;
+    venue: IVenue;
 }
 
-export interface Venue {
-    name: string;
-    address: Address;
-}
-
-export class Address { 
+export class WeddingEvent extends Entity implements IWeddingEvent {
     constructor(
-        public readonly street: string,
-        public readonly city: string,
-        public readonly state: string,
-        public readonly zip: string 
-    ) {}
-
-    // Example method to get a formatted address string
-    getFullAddress(): string {
-        return `${this.street}, ${this.city}, ${this.state} ${this.zip}`;
+        public title: string,
+        public date: Date,
+        public venue: Venue,
+        public description?: string,
+    ) {
+        super();
     }
 }
