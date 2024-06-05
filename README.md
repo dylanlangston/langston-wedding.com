@@ -197,9 +197,9 @@ erDiagram
     RSVP {
         GUEST guest
         boolean attending
-        string? plusOne
-        string? dietaryRestrictions
-        string? comment
+        string(nullable) plusOne
+        string(nullable) dietaryRestrictions
+        string(nullable) comment
         RSVPStatus rsvpStatus
     }
     VENUE {
@@ -212,8 +212,8 @@ erDiagram
         UUID id
         string name
         string email
-        string? phoneNumber
-        Address? address
+        string(nullable) phoneNumber
+        Address(nullable) address
     }
     WEDDING_EVENT {
         UUID id
