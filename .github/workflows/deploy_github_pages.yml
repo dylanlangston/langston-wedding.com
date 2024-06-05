@@ -2,10 +2,6 @@ name: Deploy Site to Github Pages
 
 on:
   workflow_call:
-    inputs:
-      version:
-        required: true
-        type: string
 
 permissions:
   contents: read

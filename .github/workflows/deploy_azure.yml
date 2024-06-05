@@ -2,10 +2,6 @@ name: Deploy Site to Azure Storage
 
 on:
   workflow_call:
-    inputs:
-      version:
-        required: true
-        type: string
 
 permissions:
   contents: read
