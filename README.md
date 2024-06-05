@@ -205,7 +205,7 @@ erDiagram
         UUID id
         string name
         Address address
-        string link
+        URL link
     }
     GUEST {
         UUID id
@@ -219,7 +219,7 @@ erDiagram
         string title
         string description
         date date
-        string website
+        VENUE venue
     }
 ```
 
