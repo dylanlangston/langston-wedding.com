@@ -64,7 +64,7 @@ jobs:
       pages: write
       id-token: write
 
-  deployGithubPages:
+  deployAzureStorage:
     if: ${{ success() || needs.Build.result == 'success' }}
     uses: dylanlangston/langston-wedding.com/.github/workflows/deploy_azure.yml@main
     needs: build
