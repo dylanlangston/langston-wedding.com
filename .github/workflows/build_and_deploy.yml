@@ -20,6 +20,11 @@ on:
         required: false
         type: number
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
   group: build-and-deploy-${{ github.ref }}
   cancel-in-progress: true
@@ -49,21 +54,22 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@main
-
-  deploy:
-    runs-on: ubuntu-latest
+      
+  deployGithubPages:
+    if: ${{ success() || needs.Build.result == 'success' }}
+    uses: dylanlangston/langston-wedding.com/.github/workflows/deploy_github_pages.yml@main
     needs: build
-    environment:
-      name: production
-    steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@main
-        with:
-          name: build-artifact
-          path: dist
-      - name: Deploy to Azure Storage
-        uses: azure/cli@master
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az storage blob upload-batch -d '$web' -s dist --overwrite -o none --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+  deployGithubPages:
+    if: ${{ success() || needs.Build.result == 'success' }}
+    uses: dylanlangston/langston-wedding.com/.github/workflows/deploy_azure.yml@main
+    needs: build
+    secrets: inherit
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
