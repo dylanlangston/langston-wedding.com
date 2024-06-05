@@ -13,6 +13,13 @@ on:
       - 'tsconfig.json'
       - 'vite.config.ts'
 
+  workflow_dispatch:
+    inputs:
+      startTimestamp:
+        description: 'Start Timestamp (unix)'
+        required: false
+        type: number
+
 jobs:
   build:
     runs-on: ubuntu-latest 
