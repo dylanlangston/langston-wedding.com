@@ -49,6 +49,10 @@ jobs:
       with:
         name: build-artifact
         path: dist
+    - name: Upload GitGub Pages artifact
+      uses: actions/upload-pages-artifact@main
+      with:
+        path: dist
       
   deployGithubPages:
     if: ${{ success() || needs.Build.result == 'success' }}
