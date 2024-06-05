@@ -21,8 +21,8 @@ on:
         type: number
 
 permissions:
-  contents: read
-  pages: write
+  packages: read
+  contents: write
   id-token: write
 
 concurrency:
