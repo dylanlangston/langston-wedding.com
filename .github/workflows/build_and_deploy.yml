@@ -34,10 +34,10 @@ jobs:
         name: build-artifact
         path: dist
     - name: Setup GitGub Pages
-        uses: actions/configure-pages@v5
+      uses: actions/configure-pages@main
     - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      id: deployment
+      uses: actions/deploy-pages@main
 
   deploy:
     runs-on: ubuntu-latest
