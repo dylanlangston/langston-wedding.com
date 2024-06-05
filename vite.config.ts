@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+// @ts-ignore
 import brotli from "rollup-plugin-brotli";
 import zlib from "zlib";
 import gzipPlugin from 'rollup-plugin-gzip';
@@ -10,11 +11,11 @@ export default defineConfig({
 		react(),
 		//Brotli plugin with some defaults.
 		brotli({
-			test: /\.(js|css|html|txt|xml|json|svg)$/, // file extensions to compress (default is shown)
+			test: /\.(js|css|html|txt|xml|json|svg)$/,
 			options: {
 				params: {
 					[zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_GENERIC,
-					[zlib.constants.BROTLI_PARAM_QUALITY]: 7 // turn down the quality, resulting in a faster compression (default is 11)
+					[zlib.constants.BROTLI_PARAM_QUALITY]: 11
 				}
 				// ... see all options https://nodejs.org/api/zlib.html#zlib_class_brotlioptions
 			},
@@ -27,11 +28,7 @@ export default defineConfig({
 		//Gzip plugin with some defaults.
 		gzipPlugin({
 			gzipOptions: {
-				//Gzip compression level 
 				level: 9,
-
-				//Dont compress files that are too small as it can just make them larger
-				minSize: 1000
 			}
 		})
 	],
