@@ -23,6 +23,10 @@ on:
         required: false
         type: number
 
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   test:
     runs-on: ubuntu-latest 
