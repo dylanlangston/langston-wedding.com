@@ -40,6 +40,8 @@ This wedding website aims to provide a seamless and interactive experience for g
 - **Post-Wedding 🎉:** Thank you message, photo gallery, and video links.
 - **Chatbot 🤖:** An AI-powered chatbot (using Azure OpenAI) to answer guest questions about various aspects of the wedding.
 
+*Mantra: The tendecy towards perfectionism underminds attempts to do good design.*
+
 ## Implementation Details ⚙️
 
 - **Frontend 🎨:** [React](https://react.dev/) with [MUI - Material UI](https://mui.com/material-ui/). This choice leverages the popularity and component-based structure of React, combined with the aesthetic and accessibility benefits of Material Design. 
@@ -109,7 +111,8 @@ This project uses DDD to structure the codebase, enhance maintainability, and al
           <li><b>Entities 👤:</b></li>
           <ul>
             <li><b>Guest:</b> A Guest is an entity because they have a unique identity. Even if their contact information changes, they're still the same guest. </li>
-            <li><b>Wedding Venue:</b> The venue also has a unique identity, even if some details change. </li>
+            <li><b>Wedding Event:</b> The wedding event has a unique identity too.</li>
+            <li><b>Venue:</b> The venue also has a unique identity. </li>
           </ul>
           <li><b>Value Objects 🔧:</b> </li>
           <ul>
@@ -188,26 +191,32 @@ The ER diagram visualizes the core entities of our domain and their relationship
 
 ```mermaid
 erDiagram
-    WEDDING_EVENT ||--|{ RSVP : contains
+    RSVP }|--|| WEDDING_EVENT : contains
     WEDDING_EVENT ||--|{ VENUE : has
     WEDDING_EVENT ||--|{ GUEST : has
     RSVP {
-        string guestName
-        string email
+        GUEST guest
         boolean attending
-        string plusOne
+        string? plusOne
+        string? dietaryRestrictions
+        string? comment
+        RSVPStatus rsvpStatus
     }
     VENUE {
+        UUID id
         string name
         string address
         string link
     }
     GUEST {
+        UUID id
         string name
         string email
-        string phone
+        string? phoneNumber
+        Address? address
     }
     WEDDING_EVENT {
+        UUID id
         string title
         string description
         date date
@@ -226,10 +235,12 @@ flowchart TB
     subgraph Wedding Information
         WeddingEvent --> VENUE("VENUE")
         WeddingEvent --> GUEST("GUEST")
-        WeddingEvent --> RSVP("RSVP")
+        RSVP("RSVP") --> WeddingEvent
         VENUE --> VenueDetails("Venue Details")
         GUEST --> GuestDetails("Guest Details")
-        RSVP --> RSVPForm("RSVP Form")
+        RSVPForm("RSVP Form") --> RSVP
+        RSVP ~~~ VENUE
+        RSVP ~~~ GUEST
     end
     subgraph Guest Communication
         Chatbot("Chatbot") <-.-> OpenAI("Azure Open AI")
