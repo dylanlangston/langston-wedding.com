@@ -27,7 +27,7 @@
 
 <hr/>
 
-## Project Overview 🎉
+## Domain Vision Statement/Project Overview 🎉
 
 This wedding website aims to provide a seamless and interactive experience for guests, encompassing features such as:
 
