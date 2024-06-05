@@ -1,4 +1,4 @@
-name: 3️⃣ - Deploy Site to Github Pages
+name: Deploy Site to Github Pages
 
 on:
   workflow_call:
