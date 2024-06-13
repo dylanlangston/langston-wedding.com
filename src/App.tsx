@@ -22,7 +22,10 @@ function App() {
   const [canToggle, setCanToggle] = useState(detector.parseUserAgent(window.navigator.userAgent).isMobile);
   const handleWindowSizeChange = () => setCanToggle(detector.parseUserAgent(window.navigator.userAgent).isMobile);
   const [currentLocation, setCurrentLocation] = useState(window.location.href);
-  const handleWindowHistoryChange = () => setCurrentLocation(window.location.href);
+  const handleWindowHistoryChange = () => {
+    setSidebarOpen(false);
+    setCurrentLocation(window.location.href);
+  }
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const handleToggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
