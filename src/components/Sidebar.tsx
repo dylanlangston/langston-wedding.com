@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Routes from './Routes';
+import Routes from '../Routes';
 import { ListItemButton } from '@mui/material';
 
 const Sidebar: React.FC = () => {
@@ -14,7 +14,7 @@ const Sidebar: React.FC = () => {
             <Box sx={{ overflow: 'auto' }}>
                 <List>
                     {Routes.map((route) => (
-                        <ListItemButton key={route.name} component="a" href={route.path}>
+                        <ListItemButton key={route.name} component="a" href={"#/" + route.path}>
                             <ListItemIcon>{route.icon}</ListItemIcon>
                             <ListItemText primary={route.name} />
                         </ListItemButton>

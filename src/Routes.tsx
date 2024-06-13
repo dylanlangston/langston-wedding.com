@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 import { EditCalendar, People, Phone, LocationOn, Info, Redeem } from '@mui/icons-material';
-import { weddingData } from '../wedding-information/WeddingData';
-import WeddingDate from "../wedding-information/WeddingDate";
+import { weddingData } from './wedding-information/WeddingData';
+import WeddingDate from "./wedding-information/WeddingDate";
 
 interface Route {
     path: string,
     name: string,
     icon: ReactElement,
-    element: () => (JSX.Element)
+    element: ReactElement
 }
 
 // Placeholder Components
@@ -20,40 +20,40 @@ const Registry = () => <h1>Registry</h1>;
 
 const Routes: Route[] = [
     {
-        path: '/about',
+        path: 'about',
         name: 'About',
         icon: <People />,
-        element: AboutUs
+        element: AboutUs()
     },
     {
-        path: '/contact',
+        path: 'contact',
         name: 'Contact',
         icon: <Phone />,
-        element: Contact
+        element: Contact()
     },
     {
-        path: '/rsvp',
+        path: 'rsvp',
         name: 'RSVP',
         icon: <EditCalendar />,
-        element: RSVP
+        element: RSVP()
     },
     {
-        path: '/venue',
+        path: 'venue',
         name: 'Venue',
         icon: <LocationOn />,
-        element: Venue
+        element: Venue()
     },
     {
-        path: '/accommodations',
+        path: 'accommodations',
         name: 'Accommodations',
         icon: <Info />,
-        element: Accommodations
+        element: Accommodations()
     },
     {
-        path: '/registry',
+        path: 'registry',
         name: 'Registry',
         icon: <Redeem />,
-        element: Registry
+        element: Registry()
     },
 ]
 
