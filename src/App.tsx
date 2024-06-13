@@ -40,6 +40,8 @@ function App() {
     }
   }, []);
 
+  const toggleChat = () => {};
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -89,7 +91,7 @@ function App() {
           </Box>
         </Box>
       </Router>
-      <ChatButton />
+      <ChatButton toggle={toggleChat} />
     </ThemeProvider>
   );
 }

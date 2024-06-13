@@ -1,22 +1,18 @@
-import React, { useState } from 'react';
-import { IconButton, Tooltip, Zoom, Box, Typography } from '@mui/material';
+import { Tooltip, Zoom, Box, Typography } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 
-const ChatButton = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface ChatButtonProps {
+  toggle: () => void;
+}
 
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
-
+const ChatButton: React.FC<ChatButtonProps> = ({toggle}) => {
   return (
     <Tooltip title="Open Chat" placement="left" TransitionComponent={Zoom}>
-      <Box // Use a Box for flexible styling and layout 
+      <Box
         sx={{
           position: 'fixed',
           bottom: 20,
           right: 20,
-          zIndex: (theme) => theme.zIndex.drawer + 2,
           backgroundColor: 'primary.main',
           color: 'common.white',
           display: 'flex', // Align icon and text horizontally
@@ -27,6 +23,7 @@ const ChatButton = () => {
             backgroundColor: 'primary.dark',
           },
         }}
+        onClick={toggle}
       >
         <Typography variant="body2">Chat</Typography> 
         <ChatIcon sx={{ ml: 1 }} /> {/* Add some spacing between icon and text */}
