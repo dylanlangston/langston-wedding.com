@@ -8,7 +8,7 @@ on:
       - main 
     paths:
       - 'Frontend/**'
-
+      - 'Backend/**'
 
   workflow_dispatch:
     inputs:
