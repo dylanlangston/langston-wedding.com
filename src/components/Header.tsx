@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ canToggle, toggleSidebar }) => {
           <MenuIcon />
         </IconButton> : null}
 
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
+        <Typography variant="h6" component="div" sx={{  ml: 2, mr: 1, userSelect: 'none' }}>
           {t('Header')}
         </Typography>
         <Favorite color="error" />

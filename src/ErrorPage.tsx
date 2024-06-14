@@ -1,16 +1,27 @@
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import { useTranslation } from 'react-i18next';
+import Box from '@mui/material/Box'; // Import Box component
 
 const ErrorPage = () => {
+  const { t } = useTranslation();
+
   return (
-    <Box 
-      display="flex" 
-      justifyContent="center" 
-      alignItems="center" 
-      textAlign="center"
-    >
-      <Typography variant="h1">
-        ¯\_(ツ)_/¯<br />An error has occurred, sorry!
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+      height: (theme) => `calc(100vh - calc(${theme.components?.MuiAppBar?.defaultProps?.style?.height} * 2))`,
+      userSelect: 'none'
+    }}>
+      {/* Use Box component for centering */}
+      <Typography variant="h2">
+        ¯\_(ツ)_/¯
+      </Typography>
+      <br />
+      <Typography variant="h3">
+        {t("Error")}
       </Typography>
     </Box>
   );
