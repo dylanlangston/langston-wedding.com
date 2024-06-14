@@ -42,11 +42,11 @@ jobs:
       uses: actions/upload-artifact@main
       with:
         name: build-artifact
-        path: dist
+        path: Frontend/dist
     - name: Upload GitGub Pages artifact
       uses: actions/upload-pages-artifact@main
       with:
-        path: dist
+        path: Frontend/dist
       
   deployGithubPages:
     if: ${{ success() || needs.Build.result == 'success' }}
