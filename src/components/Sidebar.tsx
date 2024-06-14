@@ -14,7 +14,7 @@ const Sidebar: React.FC = () => {
             <Box sx={{ overflow: 'auto' }}>
                 <List>
                     {Routes.map((route) => (
-                        <ListItemButton key={route.name} component="a" href={"#/" + route.path}>
+                        <ListItemButton key={route.name} component="a" href={ window.location.protocol + "//" + window.location.host + "/#/" + route.path}>
                             <ListItemIcon>{route.icon}</ListItemIcon>
                             <ListItemText primary={route.name} />
                         </ListItemButton>
