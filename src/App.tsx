@@ -14,12 +14,16 @@ import { AnimatePresence, motion } from 'framer-motion'
 import BrowserDetector from 'browser-dtector';
 import ChatButton from './components/ChatButton';
 import ErrorPage from './ErrorPage';
+import { useTitle } from './hooks/useTitle';
+import { useTranslation } from 'react-i18next';
 
 const drawerWidth = 240;
 
 const detector = new BrowserDetector();
 
 function App() {
+  const { t } = useTranslation();
+
   const [canToggle, setCanToggle] = useState(detector.parseUserAgent(window.navigator.userAgent).isMobile);
   const handleWindowSizeChange = () => setCanToggle(detector.parseUserAgent(window.navigator.userAgent).isMobile);
   const [currentLocation, setCurrentLocation] = useState(window.location.href);
@@ -54,6 +58,8 @@ function App() {
   };
 
   const routes = siteRoutes();
+
+  useTitle(t("Header"));
 
   return (
     <ThemeProvider theme={theme}>
