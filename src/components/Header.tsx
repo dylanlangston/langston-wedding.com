@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Favorite } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
   canToggle: boolean,
@@ -12,6 +13,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ canToggle, toggleSidebar }) => {
+  const { t } = useTranslation();
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -27,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ canToggle, toggleSidebar }) => {
         </IconButton> : null}
 
         <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
-          Dylan & Mia's Wedding
+          {t('Header')}
         </Typography>
         <Favorite color="error" />
       </Toolbar>

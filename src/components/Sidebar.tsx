@@ -4,10 +4,14 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Routes from '../Routes';
+import { Route } from '../Routes';
 import { ListItemButton } from '@mui/material';
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+    Routes: Route[]
+}
+
+const Sidebar: React.FC<SidebarProps> = ({Routes}) => {
     return (
         <>
             <Toolbar />
