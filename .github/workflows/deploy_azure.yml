@@ -10,10 +10,10 @@ jobs:
     environment:
       name: production
     steps:
-      - name: Download build artifact
+      - name: Download site artifact
         uses: actions/download-artifact@main
         with:
-          name: build-artifact
+          name: site-artifact
           path: dist
       - name: Deploy to Azure Storage
         uses: azure/cli@master

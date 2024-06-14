@@ -32,7 +32,7 @@ jobs:
         node-version: '>=20'
         cache: 'npm'
         cache-dependency-path: "${{ github.workspace }}/"
-    - name: Install node dependencies
-      run: npm ci --prefix ./Frontend
-    - name: Build React App
-      run: npm run test --prefix ./Frontend
+    - name: Install dependencies
+      run: make setup
+    - name: Test App
+      run: make test

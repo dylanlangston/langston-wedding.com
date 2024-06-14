@@ -34,15 +34,20 @@ jobs:
         node-version: '>=20'
         cache: 'npm'
         cache-dependency-path: "${{ github.workspace }}/"
-    - name: Install node dependencies
+    - name: Install dependencies
       run: npm ci --prefix ./Frontend
-    - name: Build React App
-      run: npm run build --prefix ./Frontend
-    - name: Upload build artifacts
+    - name: Build App
+      run: make release
+    - name: Upload site artifacts
       uses: actions/upload-artifact@main
       with:
-        name: build-artifact
+        name: site-artifact
         path: Frontend/dist
+    - name: Upload contact function artifacts
+      uses: actions/upload-artifact@main
+      with:
+        name: contact-function-artifact
+        path: Backend/Contact/bin/Release/net6.0/publish
     - name: Upload GitGub Pages artifact
       uses: actions/upload-pages-artifact@main
       with:
