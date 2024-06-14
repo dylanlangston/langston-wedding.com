@@ -44,6 +44,16 @@ export default defineConfig({
 			}
 		}),
 	],
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks: {
+					'@mui': ['@emotion/react', '@emotion/styled', '@mui/material', '@mui/icons-material'],
+					'react': ['react', 'react-dom', 'react-i18next', 'react-router-dom'],
+				}
+			}
+		}
+	},
 	server: {
 		watch: {
 			usePolling: true,
