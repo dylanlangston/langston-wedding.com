@@ -53,6 +53,8 @@ function App() {
     return <Navigate to="/error" replace />;
   };
 
+  const routes = siteRoutes();
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -77,13 +79,13 @@ function App() {
               },
             }}
           >
-            <Sidebar />
+            <Sidebar Routes={routes} />
           </Drawer>
           <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             <Toolbar />
             <AnimatePresence mode="wait">
               <Routes>
-                {siteRoutes.map((route) => (
+                {routes.map((route) => (
                   <Route key={route.path} path={route.path} element={
                     <motion.div
                       key={currentLocation}

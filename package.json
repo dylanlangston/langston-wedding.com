@@ -23,8 +23,12 @@
     "@mui/material": "^5.15.19",
     "browser-dtector": "^4.1.0",
     "framer-motion": "^11.2.10",
+    "i18next": "^23.11.5",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-http-backend": "^2.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^14.1.2",
     "react-router-dom": "^6.23.1",
     "uuid": "^9.0.1"
   },
