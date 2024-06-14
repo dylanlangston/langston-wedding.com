@@ -13,6 +13,7 @@ import Sidebar from './components/Sidebar';
 import { AnimatePresence, motion } from 'framer-motion'
 import BrowserDetector from 'browser-dtector';
 import ChatButton from './components/ChatButton';
+import ErrorPage from './ErrorPage';
 
 const drawerWidth = 240;
 
@@ -45,6 +46,13 @@ function App() {
 
   const toggleChat = () => {};
 
+  const DefaultRedirect = () => {
+    if (window.location.pathname === '/') {
+      return <Navigate to="/about" replace />;
+    }
+    return <Navigate to="/error" replace />;
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -75,9 +83,8 @@ function App() {
             <Toolbar />
             <AnimatePresence mode="wait">
               <Routes>
-                <Route path="/" element={<Navigate to="about" replace />} />
                 {siteRoutes.map((route) => (
-                  <Route path={route.path} element={
+                  <Route key={route.path} path={route.path} element={
                     <motion.div
                       key={currentLocation}
                       initial={{ opacity: 0 }}
@@ -89,6 +96,9 @@ function App() {
                     </motion.div>
                   } />
                 ))}
+                <Route path="/error" element={<ErrorPage />} />
+                <Route path="/" element={<DefaultRedirect />} />
+                <Route path="*" element={<Navigate to="/error" replace />} />
               </Routes>
             </AnimatePresence>
           </Box>
