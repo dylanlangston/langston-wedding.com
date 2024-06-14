@@ -4,11 +4,23 @@ import react from '@vitejs/plugin-react'
 import brotli from "rollup-plugin-brotli";
 import zlib from "zlib";
 import gzipPlugin from 'rollup-plugin-gzip';
+import copy from 'rollup-plugin-copy';
 
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [
 		react(),
+
+		// Copy index.html to 404.html on build
+		copy({
+			targets: [
+				{ src: 'dist/index.html', dest: 'dist', rename: '404.html' },
+				{ src: 'dist/index.html.gz', dest: 'dist', rename: '404.html.gz' },
+				{ src: 'dist/index.html.br', dest: 'dist', rename: '404.html.br' },
+			],
+			hook: 'closeBundle',
+		}),
+
 		//Brotli plugin with some defaults.
 		brotli({
 			test: /\.(js|css|html|txt|xml|json|svg)$/,
@@ -30,7 +42,7 @@ export default defineConfig({
 			gzipOptions: {
 				level: 9,
 			}
-		})
+		}),
 	],
 	server: {
 		watch: {
