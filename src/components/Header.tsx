@@ -2,7 +2,6 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import { Favorite } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import Hamburger from './Hamburger';
