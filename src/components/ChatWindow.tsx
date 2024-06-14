@@ -39,6 +39,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isMobile, toggle }) => {
         <Box
             sx={{
                 position: 'fixed',
+                height: isMobile ? 'calc(100% - 20px)' : 500,
+                width: isMobile ? 'calc(100% - 20px)' : 400,
                 bottom: 10,
                 right: 10,
                 zIndex: (theme) => theme.zIndex.drawer + 10
@@ -46,15 +48,15 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ isMobile, toggle }) => {
         >
             <motion.div
                 key="chatwindow"
-                initial={{ x: "100vw", opacity: isMobile ? 0 : 1 }}
-                animate={{ x: "0vw", opacity: isMobile ? 1 : 1 }}
-                exit={{ x: "100vw", opacity: isMobile ? 0 : 1 }}
+                initial={{ height: "100%", x: "100vw", opacity: isMobile ? 0 : 1 }}
+                animate={{ height: "100%", x: "0vw", opacity: isMobile ? 1 : 1 }}
+                exit={{ height: "100%", x: "100vw", opacity: isMobile ? 0 : 1 }}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
             >
                 <Box
                     sx={{
-                        width: isMobile ? 'calc(100vw - 20px)' : 400,
-                        height: isMobile ? 'calc(100vh - 20px)' : 500,
+                        width: '100%',
+                        height: '100%',
                         boxShadow: isMobile ? '-100vmax -100vmax 10px 200vmax rgba(0, 0, 0, 0.5)' : 24,
                         bgcolor: 'background.paper',
                         borderRadius: 2,
