@@ -24,8 +24,8 @@ const detector = new BrowserDetector();
 function App() {
   const { t } = useTranslation();
 
-  const [canToggle, setCanToggle] = useState(detector.parseUserAgent(window.navigator.userAgent).isMobile);
-  const handleWindowSizeChange = () => setCanToggle(detector.parseUserAgent(window.navigator.userAgent).isMobile);
+  const [isMobile, setIsMobile] = useState(detector.parseUserAgent(window.navigator.userAgent).isMobile);
+  const handleWindowSizeChange = () => setIsMobile(detector.parseUserAgent(window.navigator.userAgent).isMobile);
   const [currentLocation, setCurrentLocation] = useState(window.location.href);
   const handleWindowHistoryChange = () => {
     setSidebarOpen(false);
@@ -48,7 +48,8 @@ function App() {
     }
   }, []);
 
-  const toggleChat = () => {};
+  const [chatOpen, setChatOpen] = useState(false);
+  const toggleChat = () => setChatOpen(!chatOpen);
 
   const DefaultRedirect = () => {
     if (window.location.pathname === '/') {
@@ -70,10 +71,10 @@ function App() {
             position="fixed"
             sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
           >
-            <Header canToggle={canToggle} toggleSidebar={handleToggleSidebar} />
+            <Header sidebarOpen={sidebarOpen} canToggle={isMobile} toggleSidebar={handleToggleSidebar} />
           </AppBar>
           <Drawer
-            variant={canToggle ? "temporary" : "permanent"}
+            variant={isMobile ? "temporary" : "permanent"}
             open={sidebarOpen}
             onClose={handleToggleSidebar}
             sx={{
@@ -112,7 +113,7 @@ function App() {
           </Box>
         </Box>
       </Router>
-      <ChatButton toggle={toggleChat} />
+      <ChatButton isOpen={chatOpen} isMobile={isMobile} toggle={toggleChat} />
     </ThemeProvider>
   );
 }

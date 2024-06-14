@@ -8,5 +8,8 @@
   "Registry": "Registry",
   "Chat": "Chat",
   "Chat Tooltip": "Open Chat",
+  "Chat Window": "Chat Window",
+  "Send": "Send",
+  "Type your message": "Type your message",
   "Error": "An error has occurred, sorry!"
 }
