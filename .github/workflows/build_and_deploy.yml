@@ -35,8 +35,13 @@ jobs:
         node-version: '>=20'
         cache: 'npm'
         cache-dependency-path: "${{ github.workspace }}/"
+    - name: Setup .NET environment
+      uses: actions/setup-dotnet@main
+      with:
+        dotnet-version: | 
+          8.0.x
     - name: Install dependencies
-      run: npm ci --prefix ./Frontend
+      run: make setup
     - name: Build App
       run: make release
     - name: Upload site artifacts
