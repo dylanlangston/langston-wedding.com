@@ -1,35 +1,66 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Contact
 {
-    public static class Contact
+    public class Contact
     {
-        [FunctionName("Contact")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            ILogger log)
+        private readonly ILogger<Contact> _logger;
+
+        private string fromAddress;
+        private string toAddress;
+
+        public Contact(ILogger<Contact> logger)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            fromAddress = Environment.GetEnvironmentVariable("FromEmail")!;
+            toAddress = Environment.GetEnvironmentVariable("ToEmail")!;
 
-            string name = req.Query["name"];
+            _logger = logger;
+        }
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+        [Function("Contact")]
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
+        {
+            if (req.HasJsonContentType()) {
+                try {
+                    var contactRequest = await req.ReadFromJsonAsync<ContactRequest>();
+                    return new OkObjectResult($"Hello {contactRequest?.FirstName ?? "Unknown"}!");
+                } catch (Exception err) {
+                    _logger.LogError(err, "Failed to deserialize");
+                }
+            }
+            return new BadRequestObjectResult("Invalid JSON");
+        }
+    }
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+    public class ContactRequest
+    {
+        [JsonRequired]
+        public required string FirstName { get; set; }
 
-            return new OkObjectResult(responseMessage);
+        [JsonRequired]
+        public required string LastName { get; set; }
+
+        [JsonRequired]
+        public required string Email { get; set; }
+
+        [JsonRequired]
+        public required string Message { get; set; }
+
+        public string? Phone { get; set; }
+
+        public bool IsValidEmail()
+        {
+#if DEBUG
+            if (Email == "test") return true;
+#endif
+
+            var regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$");
+            return regex.IsMatch(Email!);
         }
     }
 }

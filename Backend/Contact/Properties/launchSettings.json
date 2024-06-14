@@ -2,7 +2,7 @@
   "profiles": {
     "Contact": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7149",
+      "commandLineArgs": "--port 7202",
       "launchBrowser": false
     }
   }
