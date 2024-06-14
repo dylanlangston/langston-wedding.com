@@ -6,7 +6,7 @@
 		"context": ".."
 	},
 	"containerUser": "vscode",
-	"postCreateCommand": "npm install",
+	"postCreateCommand": "make setup",
 	"runArgs": ["--volume=/var/lib/docker", "--privileged"],
 	"customizations": {
 		"vscode": {
