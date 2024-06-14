@@ -15,7 +15,8 @@
 				"ms-vscode-remote.remote-containers",
 				"bierner.markdown-mermaid",
 				"bierner.markdown-preview-github-styles",
-				"ms-azuretools.vscode-azurestorage"
+				"ms-azuretools.vscode-azurestorage",
+				"ms-dotnettools.csdevkit"
 			],
 			"settings": {
 			}
