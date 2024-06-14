@@ -25,6 +25,7 @@ const ChatButton: React.FC<ChatButtonProps> = ({toggle}) => {
           '&:hover': {
             backgroundColor: 'primary.dark',
           },
+          'userSelect': 'none'
         }}
         onClick={toggle}
       >
