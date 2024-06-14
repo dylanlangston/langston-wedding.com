@@ -5,13 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Build",
+            "name": "Build - Frontend",
             "request": "launch",
             "runtimeArgs": [
                 "run",
                 "build"
             ],
-            "cwd": "${workspaceFolder}/",
+            "cwd": "${workspaceFolder}/Frontend/",
             "runtimeExecutable": "npm",
             "skipFiles": [
                 "<node_internals>/**"
@@ -19,13 +19,13 @@
             "type": "node"
         },
         {
-            "name": "Develop",
+            "name": "Develop - Frontend",
             "request": "launch",
             "runtimeArgs": [
                 "run",
                 "dev"
             ],
-            "cwd": "${workspaceFolder}/",
+            "cwd": "${workspaceFolder}/Frontend/",
             "runtimeExecutable": "npm",
             "skipFiles": [
                 "<node_internals>/**"
@@ -33,13 +33,13 @@
             "type": "node",
         },
         {
-            "name": "Test",
+            "name": "Test - Frontend",
             "request": "launch",
             "runtimeArgs": [
                 "run",
                 "test"
             ],
-            "cwd": "${workspaceFolder}/",
+            "cwd": "${workspaceFolder}/Frontend/",
             "runtimeExecutable": "npm",
             "skipFiles": [
                 "<node_internals>/**"
