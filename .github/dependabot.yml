@@ -5,7 +5,14 @@ updates:
     open-pull-requests-limit: 50
     commit-message:
       prefix: "Node - "
-    directory: "/"
+    directory: "./Frontend"
+    schedule:
+      interval: "monthly"
+  - package-ecosystem: "nuget"
+    open-pull-requests-limit: 50
+    commit-message:
+      prefix: "C# - "
+    directory: "./Backend"
     schedule:
       interval: "monthly"
   - package-ecosystem: "github-actions"
