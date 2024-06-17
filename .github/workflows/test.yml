@@ -25,6 +25,7 @@ concurrency:
 
 jobs:
   test:
+    if: ${{ github.event.commits[0].author.name != 'dependabot[bot]' }}
     runs-on: ubuntu-latest 
     steps:
     - uses: actions/checkout@main
