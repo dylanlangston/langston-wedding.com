@@ -5,6 +5,9 @@
 		"target": "base",
 		"context": ".."
 	},
+	"features": {
+        "git-lfs": "latest"
+    },
 	"containerUser": "vscode",
 	"postCreateCommand": "make setup",
 	"runArgs": ["--volume=/var/lib/docker", "--privileged"],
@@ -17,7 +20,8 @@
 				"bierner.markdown-preview-github-styles",
 				"ms-azuretools.vscode-azurestorage",
 				"ms-azuretools.vscode-azurefunctions",
-				"ms-dotnettools.csdevkit"
+				"ms-dotnettools.csdevkit",
+				"ms-azuretools.vscode-bicep"
 			],
 			"settings": {
 			}
