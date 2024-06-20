@@ -25,7 +25,7 @@ run_commands() {
 kill_commands() {
   for name in "${!pids[@]}"; do
     echo "Killing $name process (PID: ${pids[$name]})"
-    kill "${pids[$name]}"
+    kill -9 "${pids[$name]}"
   done
 }
 

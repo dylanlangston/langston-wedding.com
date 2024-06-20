@@ -3,14 +3,14 @@ SHELL=/bin/bash
 help: ## Display the help menu.
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-develop: ## Default Developer Target
+develop: clean ## Default Developer Target
 	@bash ./develop.sh
 
 develop-node: # develop node
 	@npm run dev --prefix ./Frontend
 
 develop-dotnet: # develop dotnet
-	@cd Backend/Contact;func start --dotnet-isolated
+	@cd Backend/Contact;func host start --dotnet-isolated
 
 test: clean ## Default Test Target.
 	@npm run test --prefix ./Frontend
