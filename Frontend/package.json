@@ -19,7 +19,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^5.15.21",
+    "@mui/icons-material": "^5.16.6",
     "@mui/material": "^5.16.6",
     "browser-dtector": "^4.1.0",
     "framer-motion": "^11.3.21",
