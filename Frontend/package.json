@@ -22,7 +22,7 @@
     "@mui/icons-material": "^5.16.6",
     "@mui/material": "^5.16.7",
     "browser-dtector": "^4.1.0",
-    "framer-motion": "^11.3.21",
+    "framer-motion": "^11.3.31",
     "i18next": "^23.12.2",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.6.1",
