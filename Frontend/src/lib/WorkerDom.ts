@@ -4,21 +4,21 @@ import { IPCProxy } from "./IPCProxy";
 // Minimum implementation of the DOM needed to make Emscripten run from our web worker
 export namespace WorkerDOM {
     export class Window {
-        public addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void {
+        public addEventListener(type: string, listener: EventListenerOrEventListenerObject, _options?: boolean | AddEventListenerOptions): void {
             const id = IPCProxy.Add(listener, type);
             postMessage(IPCMessage.AddEventHandler({ id, target: 'Window', type }));
         }
-        public removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void {
+        public removeEventListener(type: string, listener: EventListenerOrEventListenerObject, _options?: boolean | AddEventListenerOptions): void {
             const id = IPCProxy.Remove(listener, type);
             postMessage(IPCMessage.RemoveEventHandler({ id, target: 'Window', type }));
         }
         public matchMedia(query: string): MediaQueryList {
             return <any>{
-                addEventListener: (type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void => { 
+                addEventListener: (type: string, listener: EventListenerOrEventListenerObject, _options?: boolean | AddEventListenerOptions): void => { 
                     const id = IPCProxy.Add(listener, type);
                     postMessage(IPCMessage.AddMediaQueryHandler({ id, target: query, type }));
                 },
-                removeEventListener: (type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void => { 
+                removeEventListener: (type: string, listener: EventListenerOrEventListenerObject, _options?: boolean | AddEventListenerOptions): void => { 
                     const id = IPCProxy.Remove(listener, type);
                     postMessage(IPCMessage.RemoveMediaQueryHandler({ id, target: query, type }));
                 },
@@ -30,17 +30,17 @@ export namespace WorkerDOM {
         constructor(canvas: IOffscreenCanvasExtended | null) {
             this.canvas = canvas;
         }
-        public addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void {
+        public addEventListener(type: string, listener: EventListenerOrEventListenerObject, _options?: boolean | AddEventListenerOptions): void {
             const id = IPCProxy.Add(listener, type);
             postMessage(IPCMessage.AddEventHandler({ id, target: 'Document', type }));
         }
-        public removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void {
+        public removeEventListener(type: string, listener: EventListenerOrEventListenerObject, _options?: boolean | AddEventListenerOptions): void {
             // Skip resize events
             if (type == "resize") return;
             const id = IPCProxy.Remove(listener, type);
             postMessage(IPCMessage.RemoveEventHandler({ id, target: 'Window', type }));
         }
-        public querySelector(selectors: string): HTMLElement | null {
+        public querySelector(_selectors: string): HTMLElement | null {
             return <any>this.canvas;
         }
         public getCanvas = () => this.canvas;
@@ -101,11 +101,11 @@ export namespace WorkerDOM {
         public dispatchEvent(event: Event): boolean {
             return this.canvas.dispatchEvent(event);
         }
-        public addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void {
+        public addEventListener(type: string, listener: EventListenerOrEventListenerObject, _options?: boolean | AddEventListenerOptions): void {
             const id = IPCProxy.Add(listener, type);
             postMessage(IPCMessage.AddEventHandler({ id, target: 'Canvas', type }));
         }
-        public removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void {
+        public removeEventListener(type: string, listener: EventListenerOrEventListenerObject, _options?: boolean | AddEventListenerOptions): void {
             const id = IPCProxy.Remove(listener, type);
             postMessage(IPCMessage.RemoveEventHandler({ id, target: 'Canvas', type }));
         }

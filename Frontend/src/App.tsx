@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import { alpha, ThemeProvider } from '@mui/material/styles';
 import theme from './Theme';
 import Header from './components/Header';

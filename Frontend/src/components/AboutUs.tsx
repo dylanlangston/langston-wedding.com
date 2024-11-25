@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Box, Typography, Container, Card } from "@mui/material";
+import { Grid2 as Grid, Box, Typography, Card } from "@mui/material";
 import { motion } from "framer-motion";
 
 const AboutUs: React.FC = () => {
@@ -28,7 +28,7 @@ const AboutUs: React.FC = () => {
 
       <Grid container spacing={4}>
         {/* Upper Image */}
-        <Grid item xs={12}>
+        <Grid size={{xs: 12}}>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -52,7 +52,7 @@ const AboutUs: React.FC = () => {
         </Grid>
 
         {/* Paragraph and Smaller Image */}
-        <Grid item xs={12} md={6}>
+        <Grid size={{xs: 12, md: 6}}>
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -67,7 +67,7 @@ const AboutUs: React.FC = () => {
             </Typography>
           </motion.div>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid size={{xs: 12, md: 6}}>
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -91,7 +91,7 @@ const AboutUs: React.FC = () => {
         </Grid>
 
         {/* Bottom Section */}
-        <Grid item xs={12}>
+        <Grid size={{xs: 12}}>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -107,7 +107,7 @@ const AboutUs: React.FC = () => {
         </Grid>
 
         {/* Bottom Image */}
-        <Grid item xs={12}>
+        <Grid size={{xs: 12}}>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

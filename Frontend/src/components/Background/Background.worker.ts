@@ -25,7 +25,7 @@ eventHandlers[IPCMessageType.Initialize] = (message: IPCMessageDataType) => {
     // Handle resize with a smooth animation
     let runningInstance: number;
     const handleResize = debounce(async (ev: any) => {
-        const { width, height, devicePixelRatio } = ev.target;
+        const { width, height } = ev.target;
         const canvas = self.document.getCanvas();
         const currentInstance = Date.now();
         runningInstance = currentInstance;
@@ -62,7 +62,7 @@ eventHandlers[IPCMessageType.Initialize] = (message: IPCMessageDataType) => {
 
     const handlePointer = (ev: any) => {
         const { x, y, view } = ev;
-        const { width, height, devicePixelRatio } = view;
+        const { width, height } = view;
         const canvas = self.document.getCanvas();
 
         if (!canvas) return;

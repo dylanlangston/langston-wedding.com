@@ -5,6 +5,7 @@ import brotli from "rollup-plugin-brotli";
 import zlib from "zlib";
 import gzipPlugin from 'rollup-plugin-gzip';
 import copy from 'rollup-plugin-copy';
+import checker from 'vite-plugin-checker'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -43,6 +44,15 @@ export default defineConfig({
 				level: 9,
 			}
 		}),
+
+		checker({
+			overlay: {
+
+			},
+			typescript: {
+				tsconfigPath: './tsconfig.json'
+			}
+		})
 	],
 	build: {
 		rollupOptions: {

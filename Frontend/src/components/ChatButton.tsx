@@ -1,4 +1,4 @@
-import { Tooltip, Zoom, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useTranslation } from 'react-i18next';
 import ChatWindow from './ChatWindow';

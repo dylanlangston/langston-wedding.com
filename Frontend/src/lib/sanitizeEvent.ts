@@ -17,7 +17,7 @@ export const sanitizeEvent = <T>(e: any, n: number = 0): T => {
             continue;
         }
         if (e[k] instanceof Array) {
-            obj[k] = (obj[k] as Array<any>).map(o => sanitizeEvent(e[k], n + 1));
+            obj[k] = (obj[k] as Array<any>).map(o => sanitizeEvent(o[k], n + 1));
             continue;
         }
         if (e[k] instanceof Function) continue;

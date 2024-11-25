@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --clearScreen false",
+    "build": "vite build --clearScreen false",
     "test": "vitest run",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -50,6 +50,7 @@
     "rollup-plugin-gzip": "^4.0.1",
     "typescript": "^5.7.2",
     "vite": "^5.4.11",
+    "vite-plugin-checker": "^0.8.0",
     "vitest": "^2.1.5",
     "zlib": "^1.0.5"
   }

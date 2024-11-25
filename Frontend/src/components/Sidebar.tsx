@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
