@@ -34,7 +34,7 @@ const HotelCard: React.FC<HotelCardProps> = ({ title, body, image }) => {
                     },
                 }}>
 
-                    <CardMedia component='img' sx={{ width: { md: '40%' }, height: '100%', backgroundColor: 'grey', visibility: imageLoaded ? 'visible' : 'collapse' }} image={image} onLoad={() => setImageLoaded(true)} />
+                    <CardMedia component='img' sx={{ width: imageLoaded ? { md: '40%' } : '0', height: '100%', backgroundColor: 'grey', visibility: imageLoaded ? 'visible' : 'collapse' }} image={image} onLoad={() => setImageLoaded(true)} />
                     {!imageLoaded && <CardMedia sx={{ width: { md: '40%' }, height: '100%', backgroundColor: 'grey', }} onLoad={() => setImageLoaded(true)} >
                         <PhotoIcon sx={{ fontSize: 60, color: 'white' }} />
                     </CardMedia>}
