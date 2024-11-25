@@ -25,7 +25,7 @@ const ChatButton: React.FC<ChatButtonProps> = ({ isOpen, isMobile, toggle }) => 
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Tooltip key="chatButton" title={t("Chat Tooltip")} placement="left" TransitionComponent={Zoom}>
+          {/* <Tooltip key="chatButton" title={t("Chat Tooltip")} placement="left" TransitionComponent={Zoom}> */}
             <Box
               sx={{
                 position: 'fixed',
@@ -48,7 +48,7 @@ const ChatButton: React.FC<ChatButtonProps> = ({ isOpen, isMobile, toggle }) => 
               <Typography variant="body2">{t('Chat')}</Typography>
               <ChatIcon sx={{ ml: 1 }} />
             </Box>
-          </Tooltip>
+          {/* </Tooltip> */}
         </motion.div>
       )}
     </AnimatePresence>

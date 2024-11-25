@@ -3,6 +3,11 @@ import { EditCalendar, People, Phone, LocationOn, Info, Redeem } from '@mui/icon
 import { weddingData } from './wedding-information/WeddingData';
 import WeddingDate from "./wedding-information/WeddingDate";
 import { useTranslation } from "react-i18next";
+import GetInContact from "./components/GetInContact";
+import AboutUs from "./components/AboutUs";
+import VenueInformation from "./components/VenueInformation";
+import Accommodations from "./components/Accommodations";
+import Registries from "./components/Registries";
 
 export interface Route {
     path: string,
@@ -15,19 +20,19 @@ const Routes: () => Route[] = () => {
     const { t } = useTranslation();
 
     // Placeholder Components
-    const AboutUs = () => <h1>{t('About Us')}</h1>;
-    const Contact = () => <h1>{t('Contact')}</h1>;
+    const About = () => <AboutUs/>
+    const Contact = () => <GetInContact/>; 
     const RSVP = () => <WeddingDate weddingData={weddingData} />;
-    const Venue = () => <h1>{t('Venue')}</h1>;
-    const Accommodations = () => <h1>{t('Accommodations')}</h1>;
-    const Registry = () => <h1>{t('Registry')}</h1>;
+    const Venue = () => <VenueInformation/>;
+    const Hotels = () => <Accommodations/>;
+    const Registry = () => <Registries/>;
 
     return [
         {
             path: 'about',
             name: t('About Us'),
             icon: <People />,
-            element: AboutUs()
+            element: About()
         },
         {
             path: 'contact',
@@ -51,7 +56,7 @@ const Routes: () => Route[] = () => {
             path: 'accommodations',
             name: t('Accommodations'),
             icon: <Info />,
-            element: Accommodations()
+            element: Hotels()
         },
         {
             path: 'registry',

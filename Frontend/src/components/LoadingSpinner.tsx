@@ -1,5 +1,6 @@
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box } from '@mui/material';
+import theme from '../Theme';
 
 const LoadingSpinner = () => {
   return (
@@ -10,9 +11,10 @@ const LoadingSpinner = () => {
         alignItems: 'center',
         height: 'calc(100vh - 40px)',
         width: 'calc(100vw - 40px)',
+        color: theme.palette.primary.main
       }}
     >
-      <CircularProgress size="max(50px, min(10vw, 200px))" variant="indeterminate" disableShrink={true} />
+      <CircularProgress color='inherit' size="max(50px, min(10vw, 200px))" variant="indeterminate" disableShrink={true} />
     </Box>
   );
 };

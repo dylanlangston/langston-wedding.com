@@ -2,8 +2,15 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box'; // Import Box component
 
-const ErrorPage = () => {
+type ErrorContainerProps = {
+  message?: string
+};
+
+
+const ErrorContainer: React.FC<ErrorContainerProps> = ({ message })=> {
   const { t } = useTranslation();
+
+  if (!message) message = t("Error");
 
   return (
     <Box sx={{
@@ -21,10 +28,10 @@ const ErrorPage = () => {
       </Typography>
       <br />
       <Typography variant="h3">
-        {t("Error")}
+        {message}
       </Typography>
     </Box>
   );
 };
 
-export default ErrorPage;
+export default ErrorContainer;

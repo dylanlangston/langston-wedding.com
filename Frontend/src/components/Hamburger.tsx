@@ -13,6 +13,7 @@ const Hamburger: React.FC<HamburgerProps> = ({ sidebarOpen, toggleSidebar }) => 
         edge="start"
         aria-label="open drawer"
         onClick={toggleSidebar}
+        sx={{height: 50, width: 50}}
         className={'hamburger hamburger--arrow' + (sidebarOpen ? ' is-active' : '')}
     >
         <span className="hamburger-box">

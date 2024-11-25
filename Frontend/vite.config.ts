@@ -58,7 +58,13 @@ export default defineConfig({
 		watch: {
 			usePolling: true,
 		},
-		cors: true,
+		proxy:
+		{
+			'/api/': {
+				target: 'http://127.0.0.1:7071/',
+			},
+		},
+		cors: false,
 		host: true, // needed for the DC port mapping to work
 		strictPort: true,
 		port: 5173
