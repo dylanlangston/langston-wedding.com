@@ -51,7 +51,7 @@
     "typescript": "^5.7.2",
     "vite": "^5.4.11",
     "vite-plugin-checker": "^0.8.0",
-    "vitest": "^2.1.5",
+    "vitest": "^2.1.6",
     "zlib": "^1.0.5"
   }
 }
