@@ -20,7 +20,7 @@
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.1.9",
-    "@mui/material": "^6.1.8",
+    "@mui/material": "^6.3.0",
     "@mui/x-data-grid": "^7.23.0",
     "@vis.gl/react-google-maps": "^1.4.2",
     "browser-dtector": "^4.1.0",
