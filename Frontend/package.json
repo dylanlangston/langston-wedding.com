@@ -22,7 +22,7 @@
     "@mui/icons-material": "^6.4.2",
     "@mui/material": "^6.3.0",
     "@mui/x-data-grid": "^7.25.0",
-    "@vis.gl/react-google-maps": "^1.4.2",
+    "@vis.gl/react-google-maps": "^1.5.1",
     "browser-dtector": "^4.1.0",
     "framer-motion": "^12.0.6",
     "i18next": "^24.2.2",
