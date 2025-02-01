@@ -21,7 +21,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.3.0",
     "@mui/material": "^6.3.0",
-    "@mui/x-data-grid": "^7.23.5",
+    "@mui/x-data-grid": "^7.25.0",
     "@vis.gl/react-google-maps": "^1.4.2",
     "browser-dtector": "^4.1.0",
     "framer-motion": "^11.15.0",
