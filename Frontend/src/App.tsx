@@ -25,7 +25,7 @@ function App() {
 
   const { isMobile } = useIsMobile();
 
-  const scrollboxRef = useRef<HTMLElement>();
+  const scrollboxRef = useRef<HTMLElement | undefined>(undefined);
   const [currentLocation, setCurrentLocation] = useState(window.location.href);
   const handleWindowHistoryChange = () => {
     setSidebarOpen(false);
@@ -97,7 +97,7 @@ function App() {
           <Box ref={scrollboxRef} component="main" sx={{
             top: (theme) => `${(Number(theme.mixins.toolbar.minHeight!) + 5)}px`,
             position: 'relative',
-            overflow: 'scroll',
+            overflow: 'auto',
             height:  (theme) => `calc(100vh - ${(Number(theme.mixins.toolbar.minHeight!) + 5)}px)`,
             width: '100%',
             p: {

@@ -31,7 +31,7 @@ const rows: Registry[] = [
   { id: 5, registry: 'Chewy', website: 'Chewy.com', details: 'N/A' },
 ];
 
-function Registries(): JSX.Element {
+const Registries = () => {
   return (
     <Card sx={{ width: '100%',
       maxWidth: {
