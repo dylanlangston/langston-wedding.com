@@ -43,7 +43,7 @@ export class HeartParticleAnimator {
     private drawHeart(x: number, y: number, size: number, opacity: number) {
         this.ctx.save();
         this.ctx.globalAlpha = opacity;
-        this.ctx.fillStyle = theme.palette.primary.main;
+        this.ctx.fillStyle = theme.palette.secondary.main;
         this.ctx.beginPath();
         this.ctx.moveTo(x, y);
         this.ctx.bezierCurveTo(x - size / 2, y - size / 2, x - size, y + size / 3, x, y + size);

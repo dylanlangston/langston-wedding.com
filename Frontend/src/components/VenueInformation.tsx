@@ -130,7 +130,7 @@ const VenueInformation: React.FC = () => {
             sed. Gravida rutrum quisque non tellus. Elementum curabitur vitae nunc
             sed.
           </Typography>
-          <ButtonGroup variant="outlined" sx={{ mt: 2 }}>
+          <ButtonGroup color="secondary" variant="outlined" sx={{ mt: 2 }}>
             <Button startIcon={<GoogleIcon />}>Google Maps</Button>
             <Button startIcon={<AppleIcon />}>Apple Maps</Button>
             <Button startIcon={<TravelExploreIcon />}>Open Street Maps</Button>
