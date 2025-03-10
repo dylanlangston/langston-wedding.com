@@ -9,6 +9,9 @@ import checker from 'vite-plugin-checker'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+	define: {
+		FUNCTION_URL: process.env.FUNCTION_URL
+	},
 	plugins: [
 		react(),
 

@@ -7,10 +7,16 @@ RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod
 
 # Install General Dependencies
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-     && apt-get -y install --no-install-recommends ca-certificates bash curl unzip xz-utils git nodejs npm libsecret-1-0 dotnet-sdk-8.0 azure-functions-core-tools-4
+     && apt-get -y install --no-install-recommends ca-certificates bash curl unzip xz-utils git nodejs npm libsecret-1-0 dotnet-sdk-9.0 azure-functions-core-tools-4
 
 # Install Azure CLI
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
+# Install Azure Developer CLI
+RUN curl -fsSL https://aka.ms/install-azd.sh | bash
+
+# Install Azurite
+RUN npm install -g azurite
 
 # Clean Image
 RUN apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*

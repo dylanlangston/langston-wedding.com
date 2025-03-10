@@ -39,7 +39,7 @@ jobs:
       uses: actions/setup-dotnet@main
       with:
         dotnet-version: | 
-          8.0.x
+          9.0.x
     - name: Install dependencies
       run: make setup
     - name: Build App
@@ -52,8 +52,8 @@ jobs:
     - name: Upload contact function artifacts
       uses: actions/upload-artifact@main
       with:
-        name: contact-function-artifact
-        path: Backend/Contact/bin/Release/**/publish
+        name: function-artifact
+        path: Backend/Function/bin/Release/**/publish
     - name: Upload GitGub Pages artifact
       uses: actions/upload-pages-artifact@main
       with:

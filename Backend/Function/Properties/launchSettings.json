@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "Contact": {
+    "Function": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7202",
+      "commandLineArgs": "--port 7121",
       "launchBrowser": false
     }
   }

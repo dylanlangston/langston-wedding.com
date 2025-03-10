@@ -14,7 +14,8 @@
     "build": "vite build --clearScreen false",
     "test": "vitest run",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "swagger": "node ./scripts/swagger.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -49,6 +50,7 @@
     "rollup-plugin-brotli": "^3.1.0",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-gzip": "^4.0.1",
+    "swagger-typescript-api": "^13.0.23",
     "typescript": "^5.8.2",
     "vite": "^6.2.1",
     "vite-plugin-checker": "^0.9.0",

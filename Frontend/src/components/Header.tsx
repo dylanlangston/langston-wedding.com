@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = ({ sidebarOpen, canToggle, toggleSidebar }
         <Typography variant="h6" component="div" sx={{ ml: 1, mr: 1, userSelect: 'none' }}>
           {t('Header')}
         </Typography>
-        <Favorite color="secondary" />
+        <Favorite color="secondary"/>
       </Toolbar>
     </AppBar>
   );
