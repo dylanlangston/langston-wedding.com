@@ -76,3 +76,4 @@ jobs:
     permissions:
       packages: read
       contents: write
+      id-token: write
