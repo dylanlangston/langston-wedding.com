@@ -68,11 +68,6 @@ jobs:
           name: site-artifact
           path: dist
 
-      - name: Log in to Azure
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Deploy to Azure Storage
         uses: azure/cli@v2
         with:
@@ -85,7 +80,7 @@ jobs:
               --404-document 404.html
 
             az storage blob upload-batch \
-              --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
+              --account-name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
               --source ./dist \
               --destination '$web'
 
@@ -99,11 +94,6 @@ jobs:
         with:
           name: function-artifact
           path: function
-
-      - name: Log in to Azure
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy .NET Function App
         run: |
