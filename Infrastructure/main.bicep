@@ -1,10 +1,9 @@
-param subscriptionId string
-param resourceGroupName string
-param location string
+param resourceGroupId string = uniqueString(resourceGroup().id)
+param location string = resourceGroup().location
 
-param storageAccountName string = 'st${uniqueString(resourceGroup().id)}'
-param functionAppName string = 'func${uniqueString(resourceGroup().id)}'
-param appServicePlanName string = 'plan${uniqueString(resourceGroup().id)}'
+param storageAccountName string = 'st${resourceGroupId}'
+param functionAppName string = 'func${resourceGroupId}'
+param appServicePlanName string = 'plan${resourceGroupId}'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
@@ -15,11 +14,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   }
   properties: {
     allowBlobPublicAccess: true
-    staticWebsite: {
-      enabled: true
-      indexDocument: 'index.html'
-      errorDocument404Path: '404.html'
-    }
   }
 }
 
@@ -49,7 +43,7 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
-      linuxFxVersion: 'DOTNET-ISOLATED|8.0'
+      linuxFxVersion: 'DOTNET-ISOLATED|9.0'
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
@@ -64,9 +58,6 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
           value: 'dotnet-isolated'
         }
       ]
-    }
-    storageAccount: {
-      id: functionStorage.id
     }
   }
 }
