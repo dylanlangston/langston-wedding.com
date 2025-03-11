@@ -68,6 +68,11 @@ jobs:
           name: site-artifact
           path: dist
 
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Deploy to Azure Storage
         uses: azure/cli@v2
         with:
@@ -95,9 +100,14 @@ jobs:
           name: function-artifact
           path: function
 
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Deploy .NET Function App
         run: |
           az functionapp deployment source config-zip \
-            --name ${{ secrets.FUNCTION_APP_NAME }} \
+            --name func${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
             --src function.zip
