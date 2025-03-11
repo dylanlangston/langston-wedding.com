@@ -34,6 +34,10 @@ namespace Function
 
                     if (contactRequest == null) throw new NullReferenceException("Failed to deserialize");
 
+                    if (string.IsNullOrEmpty(contactRequest.Name)) return new BadRequestObjectResult("Name is required");
+
+                    if (string.IsNullOrEmpty(contactRequest.Message)) return new BadRequestObjectResult("Message is required");
+
                     if (!contactRequest.IsValidEmail) return new BadRequestObjectResult("Invalid Email Address");
 
                     return new OkObjectResult($"Hello {contactRequest?.Name ?? "Unknown"}!");

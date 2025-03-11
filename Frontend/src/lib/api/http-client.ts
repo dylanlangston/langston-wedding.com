@@ -9,12 +9,6 @@
  * ---------------------------------------------------------------
  */
 
-export interface ContactRequest {
-  name?: string;
-  email?: string;
-  message?: string;
-}
-
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
@@ -222,32 +216,5 @@ export class HttpClient<SecurityDataType = unknown> {
       if (!response.ok) throw data;
       return data.data;
     });
-  };
-}
-
-/**
- * @title Langston-Wedding.com
- * @version 1.0.0
- * @baseUrl http://localhost:7071/api
- */
-export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
-  contact = {
-    /**
-     * @description Accepts a JSON request with contact details and validates the email.
-     *
-     * @tags Contact
-     * @name Contact
-     * @summary Processes a contact request
-     * @request POST:/Contact
-     */
-    contact: (data: ContactRequest, params: RequestParams = {}) =>
-      this.request<string, string>({
-        path: `/Contact`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
   };
 }
