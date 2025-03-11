@@ -1,10 +1,10 @@
-param resourceGroupId string = uniqueString(resourceGroup().id)
+param uniqueName string = uniqueString(resourceGroup().id)
 param location string = resourceGroup().location
 
-param storageAccountName string = 'st${resourceGroupId}'
-param functionStorageAccountName string = 'funcst${resourceGroupId}'
-param functionAppName string = 'func${resourceGroupId}'
-param appServicePlanName string = 'plan${resourceGroupId}'
+param storageAccountName string = 'st${uniqueName}'
+param functionStorageAccountName string = 'funcst${uniqueName}'
+param functionAppName string = 'func${uniqueName}'
+param appServicePlanName string = 'plan${uniqueName}'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
@@ -65,3 +65,4 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
 
 output staticWebsiteUrl string = storageAccount.properties.primaryEndpoints.web
 output functionAppUrl string = 'https://${functionAppName}.azurewebsites.net'
+output resourceSuffix string = uniqueName

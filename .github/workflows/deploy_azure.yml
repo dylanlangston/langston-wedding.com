@@ -46,16 +46,18 @@ jobs:
 
             staticWebsiteUrl=$(echo $outputs | jq -r '.staticWebsiteUrl.value')
             functionAppUrl=$(echo $outputs | jq -r '.functionAppUrl.value')
-
-            echo "Static Website URL: $staticWebsiteUrl"
-            echo "Function App URL: $functionAppUrl"
-
+            resourceSuffix=$(echo $outputs | jq -r '.resourceSuffix.value')
+            
             echo "STATIC_WEBSITE_URL=$staticWebsiteUrl" >> $GITHUB_ENV
             echo "FUNCTION_APP_URL=$functionAppUrl" >> $GITHUB_ENV
+            echo "RESOURCE_SUFFIX=$resourceSuffix" >> $GITHUB_ENV
 
   deploy-site:
+    name: Deploy Site
     runs-on: ubuntu-latest
     needs: deploy-infrastructure
+    environment:
+      name: production
     steps:
       - name: Download site artifact
         uses: actions/download-artifact@main
@@ -69,7 +71,7 @@ jobs:
           azcliversion: latest
           inlineScript: |
             az storage blob service-properties update 
-              --account-name ${ secrets.AZURE_STORAGE }
+              --account-name st${{ env.RESOURCE_SUFFIX }} \
               --static-website
               --index-document Index.html
               --404-document 404.html
@@ -80,6 +82,7 @@ jobs:
               --destination '$web'
 
   deploy-function:
+    name: Deploy Function
     runs-on: ubuntu-latest
     needs: deploy-infrastructure
     steps:
