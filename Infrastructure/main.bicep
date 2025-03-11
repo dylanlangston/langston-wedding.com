@@ -1,9 +1,10 @@
 param resourceGroupId string = uniqueString(resourceGroup().id)
 param location string = resourceGroup().location
 
-param storageAccountName string = 'st${resourceGroupId}'
-param functionAppName string = 'func${resourceGroupId}'
-param appServicePlanName string = 'plan${resourceGroupId}'
+param storageAccountName string = 'st_${resourceGroupId}'
+param functionStorageAccountName string = 'funcst_${resourceGroupId}'
+param functionAppName string = 'func_${resourceGroupId}'
+param appServicePlanName string = 'plan_${resourceGroupId}'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
@@ -18,7 +19,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
 }
 
 resource functionStorage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
-  name: '${storageAccountName}func'
+  name: functionStorageAccountName
   location: location
   kind: 'StorageV2'
   sku: {
@@ -43,7 +44,6 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
-      linuxFxVersion: 'DOTNET-ISOLATED|9.0'
       appSettings: [
         {
           name: 'AzureWebJobsStorage'

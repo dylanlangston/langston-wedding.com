@@ -30,8 +30,8 @@ jobs:
             az stack group create \
               --name langston-wedding.com \
               --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
-              --location 'eastus2' \
               --template-file ./Infrastructure/main.bicep \
+              --action-on-unmanage deleteResources \
               --deny-settings-mode None
 
       - name: Wait for Deployment to Finish and Get Outputs
