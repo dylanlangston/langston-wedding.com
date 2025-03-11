@@ -44,6 +44,7 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
+      netFrameworkVersion: 'v9.0'
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
