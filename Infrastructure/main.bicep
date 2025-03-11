@@ -1,10 +1,10 @@
 param resourceGroupId string = uniqueString(resourceGroup().id)
 param location string = resourceGroup().location
 
-param storageAccountName string = 'st_${resourceGroupId}'
-param functionStorageAccountName string = 'funcst_${resourceGroupId}'
-param functionAppName string = 'func_${resourceGroupId}'
-param appServicePlanName string = 'plan_${resourceGroupId}'
+param storageAccountName string = 'st${resourceGroupId}'
+param functionStorageAccountName string = 'funcst${resourceGroupId}'
+param functionAppName string = 'func${resourceGroupId}'
+param appServicePlanName string = 'plan${resourceGroupId}'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName

@@ -39,10 +39,8 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az stack group wait --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name langston-wedding.com --created
-
             outputs=$(az stack group show \
-              --name myStack \
+              --name langston-wedding.com \
               --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
               --query "outputs" -o json)
 
