@@ -93,8 +93,8 @@ jobs:
         run: |
           DOMAIN=$(echo ${{ needs.deploy-infrastructure.outputs.staticWebsiteUrl }} | awk -F[/:] '{print $4}')
       
-          curl "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
-            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_TOKEN }}"
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             --data "{
               \"type\": \"CNAME\",
@@ -116,8 +116,8 @@ jobs:
 
       - name: Enable Cloudflare Proxy
         run: |
-          curl "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
-            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_TOKEN }}"
+          curl -X PATCH "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             --data "{
               \"name\": \"${{ secrets.CUSTOM_DOMAIN }}\",
