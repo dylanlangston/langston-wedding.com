@@ -91,13 +91,15 @@ jobs:
 
       - name: Create/Update Cloudflare DNS Record
         run: |
-          curl -X PUT "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
-            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+          DOMAIN=$(echo ${{ needs.deploy-infrastructure.outputs.staticWebsiteUrl }} | awk -F[/:] '{print $4}')
+      
+          curl "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
+            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_TOKEN }}"
             -H "Content-Type: application/json" \
             --data "{
               \"type\": \"CNAME\",
               \"name\": \"${{ secrets.CUSTOM_DOMAIN }}\",
-              \"content\": \"${{ needs.deploy-infrastructure.outputs.staticWebsiteUrl }}\",
+              \"content\": \"$DOMAIN\",
               \"ttl\": 3600,
               \"proxied\": false
             }"
@@ -114,8 +116,8 @@ jobs:
 
       - name: Enable Cloudflare Proxy
         run: |
-          curl -X PUT "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
-            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+          curl "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
+            -H "X-Auth-Key: ${{ secrets.CLOUDFLARE_API_TOKEN }}"
             -H "Content-Type: application/json" \
             --data "{
               \"name\": \"${{ secrets.CUSTOM_DOMAIN }}\",
