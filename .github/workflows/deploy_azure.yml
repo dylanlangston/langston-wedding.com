@@ -89,6 +89,39 @@ jobs:
               --source ./dist \
               --destination '$web'
 
+      - name: Create/Update Cloudflare DNS Record
+        run: |
+          curl -X PUT "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data "{
+              \"type\": \"CNAME\",
+              \"name\": \"${{ secrets.CUSTOM_DOMAIN }}\",
+              \"content\": \"${{ needs.deploy-infrastructure.outputs.staticWebsiteUrl }}\",
+              \"ttl\": 3600,
+              \"proxied\": false
+            }"
+
+      - name: Add Domain to Azure Static Website
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage account update \
+              --name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
+              --custom-domain ${{ secrets.CUSTOM_DOMAIN }} \
+              --use-subdomain false
+
+      - name: Enable Cloudflare Proxy
+        run: |
+          curl -X PUT "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data "{
+              \"name\": \"${{ secrets.CUSTOM_DOMAIN }}\",
+              \"proxied\": true
+            }"
+
   deploy-function:
     name: Deploy Function
     runs-on: ubuntu-latest
