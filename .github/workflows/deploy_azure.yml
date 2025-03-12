@@ -87,7 +87,7 @@ jobs:
             az storage blob upload-batch \
               --account-name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
               --source ./dist \
-              --destination '$web'
+              --destination '$web' \
               --overwrite
 
       - name: Create/Update Cloudflare DNS Record
