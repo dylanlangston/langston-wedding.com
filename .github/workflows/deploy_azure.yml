@@ -123,14 +123,13 @@ jobs:
 
       - name: Enable Cloudflare Proxy
         run: |
-        run: |
           curl -X PUT "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records/${{ env.DNS_RECORD_ID }}" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             --data "{
               \"proxied\": true
             }"
-            
+
   deploy-function:
     name: Deploy Function
     runs-on: ubuntu-latest
