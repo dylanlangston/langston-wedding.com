@@ -91,6 +91,7 @@ jobs:
               --overwrite
 
       - name: Create/Update Cloudflare DNS Record
+        id: create_dns_record
         run: |
           DOMAIN=$(echo ${{ needs.deploy-infrastructure.outputs.staticWebsiteUrl }} | awk -F[/:] '{print $4}')
       
@@ -107,7 +108,7 @@ jobs:
 
           DNS_RECORD_ID=$(echo $RESPONSE | jq -r '.result.id')
 
-          echo "DNS_RECORD_ID=$DNS_RECORD_ID" >> $GITHUB_ENV
+          echo "dns_record_id=$DNS_RECORD_ID" >> "$GITHUB_OUTPUT"
 
           sleep 30
 
@@ -123,7 +124,7 @@ jobs:
 
       - name: Enable Cloudflare Proxy
         run: |
-          curl -X PATCH "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records/${{ env.DNS_RECORD_ID }}" \
+          curl -X PATCH "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records/${{ steps.create_dns_record.outputs.dns_record_id }}" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             --data "{
