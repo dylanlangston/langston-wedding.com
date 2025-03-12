@@ -104,6 +104,8 @@ jobs:
               \"proxied\": false
             }"
 
+          sleep 30
+
       - name: Add Domain to Azure Static Website
         uses: azure/cli@v2
         with:
