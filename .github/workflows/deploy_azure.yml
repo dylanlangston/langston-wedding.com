@@ -149,7 +149,6 @@ jobs:
         with:
           name: function-artifact
           path: function
-          un
 
       - name: Log in to Azure
         uses: azure/login@v2
