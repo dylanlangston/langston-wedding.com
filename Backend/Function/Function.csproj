@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
-    <GENERATE_SWAGGER>true</GENERATE_SWAGGER>
+    <GENERATE_SWAGGER>false</GENERATE_SWAGGER>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
