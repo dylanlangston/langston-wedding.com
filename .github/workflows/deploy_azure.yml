@@ -94,19 +94,29 @@ jobs:
         id: create_dns_record
         run: |
           DOMAIN=$(echo ${{ needs.deploy-infrastructure.outputs.staticWebsiteUrl }} | awk -F[/:] '{print $4}')
+
+          VERIFYDOMAINID=$(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records?name=asverify.$DOMAIN" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            | jq -r '.result[0].id')
+
+          DOMAINID=$(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records?name=$DOMAIN" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            | jq -r '.result[0].id')
       
-          RESPONSE=$(curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
+          curl -X PATCH "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records/$VERIFYDOMAINID" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             --data "{
               \"type\": \"CNAME\",
-              \"name\": \"${{ secrets.CUSTOM_DOMAIN }}\",
+              \"name\": \"asverify.${{ secrets.CUSTOM_DOMAIN }}\",
               \"content\": \"asverify.$DOMAIN\",
               \"ttl\": 3600,
               \"proxied\": false
-            }")
+            }"
 
-          RESPONSE=$(curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
+          curl -X PATCH "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records/$DOMAINID" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             --data "{
@@ -115,7 +125,7 @@ jobs:
               \"content\": \"$DOMAIN\",
               \"ttl\": 3600,
               \"proxied\": true
-            }")
+            }"
 
           sleep 30
 
