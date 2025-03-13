@@ -149,6 +149,7 @@ jobs:
         with:
           name: function-artifact
           path: function
+          un
 
       - name: Log in to Azure
         uses: azure/login@v2
@@ -160,4 +161,4 @@ jobs:
           az functionapp deployment source config-zip \
             --name func${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
-            --src function.zip
+            --src out/function.zip

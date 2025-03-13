@@ -55,7 +55,7 @@ jobs:
       uses: actions/upload-artifact@main
       with:
         name: function-artifact
-        path: functionapp.zip
+        path: publish/out
     - name: Upload GitGub Pages artifact
       uses: actions/upload-pages-artifact@main
       with:
