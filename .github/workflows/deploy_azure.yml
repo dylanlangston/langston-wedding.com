@@ -101,14 +101,21 @@ jobs:
             --data "{
               \"type\": \"CNAME\",
               \"name\": \"${{ secrets.CUSTOM_DOMAIN }}\",
-              \"content\": \"$DOMAIN\",
+              \"content\": \"asverify.$DOMAIN\",
               \"ttl\": 3600,
               \"proxied\": false
             }")
 
-          DNS_RECORD_ID=$(echo $RESPONSE | jq -r '.result.id')
-
-          echo "dns_record_id=$DNS_RECORD_ID" >> "$GITHUB_OUTPUT"
+          RESPONSE=$(curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data "{
+              \"type\": \"CNAME\",
+              \"name\": \"${{ secrets.CUSTOM_DOMAIN }}\",
+              \"content\": \"$DOMAIN\",
+              \"ttl\": 3600,
+              \"proxied\": true
+            }")
 
           sleep 30
 
@@ -120,16 +127,7 @@ jobs:
             az storage account update \
               --name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
               --custom-domain ${{ secrets.CUSTOM_DOMAIN }} \
-              --use-subdomain false
-
-      - name: Enable Cloudflare Proxy
-        run: |
-          curl -X PATCH "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records/${{ steps.create_dns_record.outputs.dns_record_id }}" \
-            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            --data "{
-              \"proxied\": true
-            }"
+              --use-subdomain true
 
   deploy-function:
     name: Deploy Function
