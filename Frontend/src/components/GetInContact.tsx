@@ -2,11 +2,10 @@ import { Button, Card, TextField, Typography, CircularProgress } from '@mui/mate
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Contact } from '../lib/api/Contact';
-import { API_URL } from '../utilities';
 
 interface GetInContactProps {}
 
-const api = new Contact({ baseUrl: API_URL });
+const api = new Contact({ baseUrl: FUNCTION_URL });
 
 const GetInContact: React.FC<GetInContactProps> = () => {
   const { t } = useTranslation();

@@ -112,7 +112,7 @@ jobs:
               \"type\": \"CNAME\",
               \"name\": \"asverify.${{ secrets.CUSTOM_DOMAIN }}\",
               \"content\": \"asverify.$DOMAIN\",
-              \"ttl\": 3600,
+              \"ttl\": 300,
               \"proxied\": false
             }"
 
@@ -123,11 +123,12 @@ jobs:
               \"type\": \"CNAME\",
               \"name\": \"${{ secrets.CUSTOM_DOMAIN }}\",
               \"content\": \"$DOMAIN\",
-              \"ttl\": 3600,
+              \"ttl\": 300,
               \"proxied\": true
             }"
 
-          sleep 30
+          # Sleep 2 minutes to ensure DNS records have populated
+          sleep 120
 
       - name: Add Domain to Azure Static Website
         uses: azure/cli@v2

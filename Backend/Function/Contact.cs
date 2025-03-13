@@ -2,11 +2,6 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-using Microsoft.OpenApi.Models;
-using System.Net;
 
 namespace Function
 {
@@ -19,10 +14,12 @@ namespace Function
             _logger = logger;
         }
 
+        #if ADD_SWAGGER
         [OpenApiOperation(operationId: "Contact", tags: new[] { "Contact" }, Summary = "Processes a contact request", Description = "Accepts a JSON request with contact details and validates the email.")]
         [OpenApiRequestBody( contentType: "application/json", typeof(ContactRequest))]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "Successful response with greeting message")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "Bad request when JSON is invalid or email is incorrect")]
+        #endif
         [Function("Contact")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req)
         {
@@ -65,10 +62,8 @@ namespace Function
 
         [GeneratedRegex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Singleline, 100)]
         private static partial Regex EmailRegex();
-
-        [JsonIgnore]
-        [Newtonsoft.Json.JsonIgnore]
-        public bool IsValidEmail
+        
+        internal bool IsValidEmail
         {
             get => EmailRegex().IsMatch(Email);
         }

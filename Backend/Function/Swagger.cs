@@ -1,3 +1,4 @@
+#if ADD_SWAGGER
 using System.Security.Claims;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Extensions.OpenApi;
@@ -134,3 +135,4 @@ namespace Function
         }
     }
 }
+#endif

@@ -1,21 +1,18 @@
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Function;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("./appsettings.json");
+builder.Configuration.AddJsonFile("./appsettings.json", false, true);
 
-builder.ConfigureFunctionsWebApplication();
-
-#if GENERATE_SWAGGER || DEBUG
+#if ADD_SWAGGER
 builder.Services.AddSwaggerConfig();
 #endif
 
 var host = builder.Build();
 
-#if GENERATE_SWAGGER || DEBUG
+#if ADD_SWAGGER
 await host.BuildSwagger();
 #endif
 
