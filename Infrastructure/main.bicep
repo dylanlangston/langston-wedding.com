@@ -13,9 +13,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   sku: {
     name: 'Standard_LRS'
   }
-  properties: {
-    allowBlobPublicAccess: true
-  }
 }
 
 resource functionStorage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
