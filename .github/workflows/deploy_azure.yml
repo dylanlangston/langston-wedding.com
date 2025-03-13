@@ -160,4 +160,4 @@ jobs:
           az functionapp deployment source config-zip \
             --name func${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
-            --src out/function.zip
+            --src functionapp.zip
