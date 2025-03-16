@@ -9,15 +9,12 @@ param appServicePlanName string = 'plan${uniqueName}'
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appServicePlanName
   location: location
-  kind: 'functionapp,linux'
+  kind: 'linux'
   tags: tags
   sku: {
-    tier: 'Dynamic'
-    name: 'Y1'
+    tier: 'FREE'
+    name: 'F1'
   }
-   properties: {
-     
-   }
 }
 
 output serverFarmResourceId string = appServicePlan.id
