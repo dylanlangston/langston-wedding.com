@@ -7,10 +7,14 @@ param serverFarmResourceId string
 module site 'br/public:avm/res/web/site:0.15.1' = {
   name: 'functionDeployment'
   params: {
-    kind: 'functionapp'
+    kind: 'functionapp,linux'
     name: functionAppName
     serverFarmResourceId: serverFarmResourceId
     location: location
+    appSettingsKeyValuePairs: {
+      FUNCTIONS_EXTENSION_VERSION: '~4'
+      FUNCTIONS_WORKER_RUNTIME: 'dotnet'
+    }
     siteConfig: {
       netFrameworkVersion: 'v9.0'
       use32BitWorkerProcess: false
