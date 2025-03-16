@@ -9,20 +9,20 @@ param functionStorageAccountName string = 'funcst${uniqueName}'
 param serverFarmResourceId string
 
 resource functionStorage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
-    name: functionStorageAccountName
-    location: location
-    kind: 'StorageV2'
-    sku: {
-      name: 'Standard_LRS'
-    }
-    properties: {
-        supportsHttpsTrafficOnly: true
-        minimumTlsVersion: 'TLS1_2'
-        defaultToOAuthAuthentication: true
-        allowBlobPublicAccess: false
-        publicNetworkAccess: 'Enabled'
-      }
+  name: functionStorageAccountName
+  location: location
+  kind: 'StorageV2'
+  sku: {
+    name: 'Standard_LRS'
   }
+  properties: {
+    supportsHttpsTrafficOnly: true
+    minimumTlsVersion: 'TLS1_2'
+    defaultToOAuthAuthentication: true
+    allowBlobPublicAccess: false
+    publicNetworkAccess: 'Enabled'
+  }
+}
 
 resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
   name: functionAppName
@@ -32,7 +32,6 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
   properties: {
     serverFarmId: serverFarmResourceId
     siteConfig: {
-      netFrameworkVersion: 'v9.0'
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
@@ -57,7 +56,6 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
     }
     httpsOnly: true
     publicNetworkAccess: 'Enabled'
-
   }
 }
 
