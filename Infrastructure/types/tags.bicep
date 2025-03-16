@@ -1,2 +1,4 @@
 @export()
-type tags = object
+type tags = {
+  'app-name': string
+}

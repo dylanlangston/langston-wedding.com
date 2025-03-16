@@ -87,7 +87,7 @@ jobs:
 
             az storage blob upload-batch \
               --account-name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
-              --auth-mode login \
+              --auth-mode key \
               --source ./dist \
               --destination '$web' \
               --overwrite
