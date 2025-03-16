@@ -30,7 +30,7 @@ module site 'br/public:avm/res/web/site:0.15.1' = {
   params: {
     kind: 'functionapp'
     name: functionAppName
-    serverFarmResourceId: '<serverFarmResourceId>'
+    serverFarmResourceId: appServicePlan.id
     location: location
     siteConfig: {
       netFrameworkVersion: 'v9.0'
