@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
 
 	return {
 		define: {
-			FUNCTION_URL: isDebug ? "/api" : "__FUNCTION_APP_URI__"
+			FUNCTION_URL: JSON.stringify(isDebug ? "/api" : process.env.FUNCTION_URL)
 		},
 		plugins: [
 			react(),
