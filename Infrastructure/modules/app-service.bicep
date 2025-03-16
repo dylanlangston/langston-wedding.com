@@ -12,8 +12,8 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   kind: 'linux'
   tags: tags
   sku: {
-    tier: 'FREE'
-    name: 'F1'
+    tier: 'Dynamic'
+    name: 'Y1'
   }
 }
 

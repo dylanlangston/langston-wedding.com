@@ -1,29 +1,63 @@
-import {tags as tagsType} from '../types/tags.bicep'
+import { tags as tagsType } from '../types/tags.bicep'
 
 param uniqueName string = uniqueString(resourceGroup().id)
 param location string = resourceGroup().location
 param tags tagsType
 
 param functionAppName string = 'func${uniqueName}'
+param functionStorageAccountName string = 'funcst${uniqueName}'
 param serverFarmResourceId string
 
-module site 'br/public:avm/res/web/site:0.15.1' = {
-  name: 'functionDeployment'
-  params: {
-    kind: 'functionapp,linux'
-    name: functionAppName
-    tags: tags
-    serverFarmResourceId: serverFarmResourceId
+resource functionStorage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+    name: functionStorageAccountName
     location: location
-    appSettingsKeyValuePairs: {
-      FUNCTIONS_EXTENSION_VERSION: '~4'
-      FUNCTIONS_WORKER_RUNTIME: 'dotnet-isolated'
+    kind: 'StorageV2'
+    sku: {
+      name: 'Standard_LRS'
     }
-    httpsOnly: true
+    properties: {
+        supportsHttpsTrafficOnly: true
+        minimumTlsVersion: 'TLS1_2'
+        defaultToOAuthAuthentication: true
+        allowBlobPublicAccess: false
+        publicNetworkAccess: 'Enabled'
+      }
+  }
+
+resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
+  name: functionAppName
+  location: location
+  kind: 'functionapp'
+  tags: tags
+  properties: {
+    serverFarmId: serverFarmResourceId
     siteConfig: {
       netFrameworkVersion: 'v9.0'
+      appSettings: [
+        {
+          name: 'AzureWebJobsStorage'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${functionStorageAccountName};AccountKey=${listKeys(functionStorage.id, '2022-05-01').keys[0].value};EndpointSuffix=core.windows.net'
+        }
+        {
+          name: 'FUNCTIONS_EXTENSION_VERSION'
+          value: '~4'
+        }
+        {
+          name: 'FUNCTIONS_WORKER_RUNTIME'
+          value: 'dotnet-isolated'
+        }
+      ]
+      cors: {
+        allowedOrigins: [
+          'https://portal.azure.com'
+        ]
+      }
       use32BitWorkerProcess: false
+      linuxFxVersion: 'DOTNET-ISOLATED|9.0'
     }
+    httpsOnly: true
+    publicNetworkAccess: 'Enabled'
+
   }
 }
 

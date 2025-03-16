@@ -14,9 +14,9 @@ module staticWebSite 'br/public:avm/res/storage/storage-account:0.18.2' = {
     tags: tags
     location: location
     skuName: 'Standard_LRS'
-    allowBlobPublicAccess: true
     supportsHttpsTrafficOnly: true
     minimumTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
   }
 }
 
