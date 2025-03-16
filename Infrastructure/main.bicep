@@ -3,6 +3,7 @@ param location string = resourceGroup().location
 
 param storageAccountName string = 'st${uniqueName}'
 param functionAppName string = 'func${uniqueName}'
+param appServicePlanName string = 'plan${uniqueName}'
 
 module staticWebsite './modules/static-website.bicep' = {
   name: 'staticWebsite'
@@ -13,11 +14,21 @@ module staticWebsite './modules/static-website.bicep' = {
   }
 }
 
+module appServicePlan './modules/app-service.bicep' = {
+  name: 'appServicePlan'
+  params: {
+    uniqueName: uniqueName
+    appServicePlanName: appServicePlanName
+    location: location
+  }
+}
+
 module function './modules/function.bicep' = {
   name: 'function'
   params: {
     uniqueName: uniqueName
     functionAppName: functionAppName
+    serverFarmResourceId: appServicePlan.outputs.serverFarmResourceId
     location: location
   }
 }

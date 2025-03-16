@@ -10,6 +10,14 @@ module staticWebSite 'br/public:avm/res/storage/storage-account:0.18.2' = {
     kind: 'StorageV2'
     location: location
     skuName: 'Standard_LRS'
+    allowBlobPublicAccess: true
+    supportsHttpsTrafficOnly: true
+    networkAcls: {
+      defaultAction: 'Allow'
+      bypass: 'AzureServices'
+      ipRules: []
+      virtualNetworkRules: []
+    }
   }
 }
 
