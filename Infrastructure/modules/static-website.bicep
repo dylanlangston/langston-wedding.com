@@ -4,7 +4,7 @@ param location string = resourceGroup().location
 param storageAccountName string = 'st${uniqueName}'
 
 module staticWebSite 'br/public:avm/res/storage/storage-account:0.18.2' = {
-  name: 'staticWebSite'
+  name: 'staticWebSiteDeployment'
   params: {
     name: storageAccountName
     kind: 'StorageV2'

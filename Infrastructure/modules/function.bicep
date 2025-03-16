@@ -26,7 +26,7 @@ module storage 'br/public:avm/res/storage/storage-account:0.18.2' = {
 }
 
 module site 'br/public:avm/res/web/site:0.15.1' = {
-  name: 'siteDeployment'
+  name: 'functionDeployment'
   params: {
     kind: 'functionapp'
     name: functionAppName
