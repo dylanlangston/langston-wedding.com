@@ -1,15 +1,15 @@
-param uniqueName string = uniqueString(resourceGroup().id)
-param location string = resourceGroup().location
-
-param storageAccountName string = 'st${uniqueName}'
-param functionAppName string = 'func${uniqueName}'
-param appServicePlanName string = 'plan${uniqueName}'
+var rg = resourceGroup()
+var uniqueName = uniqueString(rg.id)
+var location =  rg.location
+var tags = {
+  'app-name': 'Langston-Wedding.com'
+}
 
 module staticWebsite './modules/static-website.bicep' = {
   name: 'staticWebsite'
   params: {
+    tags: tags
     uniqueName: uniqueName
-    storageAccountName: storageAccountName
     location: location
   }
 }
@@ -17,8 +17,8 @@ module staticWebsite './modules/static-website.bicep' = {
 module appServicePlan './modules/app-service.bicep' = {
   name: 'appServicePlan'
   params: {
+    tags: tags
     uniqueName: uniqueName
-    appServicePlanName: appServicePlanName
     location: location
   }
 }
@@ -26,10 +26,10 @@ module appServicePlan './modules/app-service.bicep' = {
 module function './modules/function.bicep' = {
   name: 'function'
   params: {
+    tags: tags
     uniqueName: uniqueName
-    functionAppName: functionAppName
-    serverFarmResourceId: appServicePlan.outputs.serverFarmResourceId
     location: location
+    serverFarmResourceId: appServicePlan.outputs.serverFarmResourceId
   }
 }
 

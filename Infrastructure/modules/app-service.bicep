@@ -1,5 +1,8 @@
-param uniqueName string = uniqueString(resourceGroup().id)
-param location string = resourceGroup().location
+import {tags as tagsType} from '../types/tags.bicep'
+
+param uniqueName string
+param location string
+param tags tagsType
 
 param appServicePlanName string = 'plan${uniqueName}'
 
@@ -7,6 +10,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appServicePlanName
   location: location
   kind: 'functionapp'
+  tags: tags
   sku: {
     tier: 'Dynamic'
     name: 'Y1'
