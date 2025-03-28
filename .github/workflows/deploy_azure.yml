@@ -94,12 +94,20 @@ jobs:
               --index-document Index.html \
               --404-document 404.html
 
+            az storage account update 
+              --name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
+              --default-action Allow
+
             az storage blob upload-batch \
               --account-name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
-              --auth-mode login \
+              --auth-mode key \
               --source ./dist \
               --destination '$web' \
               --overwrite
+
+            az storage account update 
+              --name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
+              --default-action Deny
 
       - name: Create/Update Cloudflare DNS Record
         id: create_dns_record
