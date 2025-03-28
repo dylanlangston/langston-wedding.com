@@ -12,6 +12,10 @@ builder.Configuration.AddJsonFile("./appsettings.json", false, true);
 builder.Services.AddSwaggerConfig();
 #endif
 
+builder.Services
+    .AddApplicationInsightsTelemetryWorkerService()
+    .ConfigureFunctionsApplicationInsights();
+
 var host = builder.Build();
 
 #if ADD_SWAGGER
@@ -22,9 +26,4 @@ await host.BuildSwagger();
 Environment.Exit(0);
 #endif
 
-builder.Services
-    .AddApplicationInsightsTelemetryWorkerService()
-    .ConfigureFunctionsApplicationInsights();
-
 host.Run();
-
