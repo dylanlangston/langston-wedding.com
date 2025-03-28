@@ -15,6 +15,9 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
     tier: 'Dynamic'
     name: 'Y1'
   }
+  properties: {
+    reserved: true
+  }
 }
 
 output serverFarmResourceId string = appServicePlan.id
