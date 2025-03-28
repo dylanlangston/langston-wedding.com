@@ -1,4 +1,4 @@
-import {tags as tagsType} from '../types/tags.bicep'
+import { tags as tagsType } from '../types/tags.bicep'
 
 param uniqueName string = uniqueString(resourceGroup().id)
 param location string = resourceGroup().location
@@ -18,6 +18,16 @@ module staticWebSite 'br/public:avm/res/storage/storage-account:0.18.2' = {
     minimumTlsVersion: 'TLS1_2'
     publicNetworkAccess: 'Enabled'
     allowBlobPublicAccess: true
+    networkAcls: {
+      bypass: 'AzureServices'
+      defaultAction: 'Allow'
+      ipRules: [
+        {
+          ipAddressOrRange: '0.0.0.0/0'
+          action: 'Allow'
+        }
+      ]
+    }
   }
 }
 
