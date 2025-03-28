@@ -52,7 +52,7 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
         ]
       }
       use32BitWorkerProcess: false
-      linuxFxVersion: 'DOTNET-ISOLATED|9.0'
+      linuxFxVersion: 'DOTNET-ISOLATED|9'
     }
     httpsOnly: true
     publicNetworkAccess: 'Enabled'
