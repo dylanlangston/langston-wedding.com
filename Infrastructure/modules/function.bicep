@@ -60,3 +60,4 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
 }
 
 output functionAppUrl string = 'https://${functionAppName}.azurewebsites.net'
+output customDomainVerificationId string = functionApp.properties.customDomainVerificationId

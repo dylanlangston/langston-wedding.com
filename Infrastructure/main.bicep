@@ -38,4 +38,5 @@ module function './modules/function.bicep' = {
 
 output staticWebsiteUrl string = staticWebsite.outputs.staticWebsiteUrl
 output functionAppUrl string = function.outputs.functionAppUrl
+output functionCustomDomainVerificationId string = function.outputs.customDomainVerificationId
 output resourceSuffix string = uniqueName

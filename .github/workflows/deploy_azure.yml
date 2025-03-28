@@ -61,10 +61,12 @@ jobs:
             staticWebsiteUrl=$(echo $outputs | jq -r '.staticWebsiteUrl.value')
             functionAppUrl=$(echo $outputs | jq -r '.functionAppUrl.value')
             resourceSuffix=$(echo $outputs | jq -r '.resourceSuffix.value')
+            functionCustomDomainVerificationId=$(echo $outputs | jq -r '.functionCustomDomainVerificationId.value')
             
             echo "staticWebsiteUrl=$staticWebsiteUrl" >> "$GITHUB_OUTPUT"
             echo "functionAppUrl=$functionAppUrl" >> "$GITHUB_OUTPUT"
             echo "resourceSuffix=$resourceSuffix" >> "$GITHUB_OUTPUT"
+            echo "functionCustomDomainVerificationId=$functionCustomDomainVerificationId" >> "$GITHUB_OUTPUT"
 
   deploy-site:
     name: Deploy Site
@@ -116,12 +118,12 @@ jobs:
         run: |
           DOMAIN=$(echo ${{ needs.deploy-infrastructure.outputs.staticWebsiteUrl }} | awk -F[/:] '{print $4}')
 
-          VERIFYDOMAINID=$(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records?name=asverify.$DOMAIN" \
+          VERIFYDOMAINID=$(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records?name=asverify.${{ secrets.CUSTOM_DOMAIN }}" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             | jq -r '.result[0].id')
 
-          DOMAINID=$(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records?name=$DOMAIN" \
+          DOMAINID=$(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records?name=${{ secrets.CUSTOM_DOMAIN }}" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             | jq -r '.result[0].id')
@@ -177,6 +179,44 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Create/Update Cloudflare DNS Record
+        id: create_dns_record
+        run: |
+          DOMAIN=$(echo ${{ needs.deploy-infrastructure.outputs.functionAppUrl }} | awk -F[/:] '{print $4}')
+          ASUID=$(echo ${{ needs.deploy-infrastructure.outputs.functionCustomDomainVerificationId }})
+
+          APIDOMAINID=$(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records?name=${{ secrets.CUSTOM_API_DOMAIN }}" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            | jq -r '.result[0].id')
+
+          ASUIDDOMAINID=$(curl -X GET "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records?name=asuid.${{ secrets.CUSTOM_API_DOMAIN }}" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            | jq -r '.result[0].id')
+      
+          curl -X PATCH "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records/$APIDOMAINID" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data "{
+              \"type\": \"CNAME\",
+              \"name\": \"${{ secrets.CUSTOM_API_DOMAIN }}\",
+              \"content\": \"$DOMAIN\",
+              \"ttl\": 300,
+              \"proxied\": false
+            }"
+
+          curl -X PATCH "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/dns_records/$DOMAINID" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data "{
+              \"type\": \"TXT\",
+              \"name\": \"asuid.${{ secrets.CUSTOM_API_DOMAIN }}\",
+              \"content\": \"$ASUID\",
+              \"ttl\": 300,
+              \"proxied\": false
+            }"
+        
       - name: Deploy .NET Function App
         run: |
           az functionapp deployment source config-zip \

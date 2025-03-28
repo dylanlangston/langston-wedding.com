@@ -46,7 +46,7 @@ jobs:
       run: make setup
     - name: Build App
       env:
-        FUNCTION_URL: ${{ secrets.CUSTOM_API_DOMAIN }}
+        FUNCTION_URL: https://${{ secrets.CUSTOM_API_DOMAIN }}/api
       run: make release
     - name: Upload site artifacts
       uses: actions/upload-artifact@main
