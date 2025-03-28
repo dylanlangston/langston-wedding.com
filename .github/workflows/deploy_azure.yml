@@ -98,6 +98,8 @@ jobs:
               --name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
               --default-action Allow
 
+            sleep 30
+
             az storage blob upload-batch \
               --account-name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
               --auth-mode key \
