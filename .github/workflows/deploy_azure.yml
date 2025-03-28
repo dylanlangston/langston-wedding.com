@@ -26,6 +26,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Get Cloudflare IPs
+        id: get_cloudflare_ips
+        run: |
+          IPS=$(curl https://api.cloudflare.com/client/v4/ips \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            | jq -r '.result.ipv4_cidrs|.[]')
+          echo "::set-output name=cloudflare_ips::$IPS"
+
       - name: Deploy Bicep Template
         uses: azure/cli@v2
         with:
@@ -37,6 +45,7 @@ jobs:
               --template-file ./Infrastructure/main.bicep \
               --action-on-unmanage deleteResources \
               --deny-settings-mode None
+              --parameters whitelistedIPs="${{ steps.get_cloudflare_ips.outputs.cloudflare_ips }}"
 
       - name: Get Deployment Outputs
         id: get_outputs

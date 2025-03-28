@@ -1,6 +1,8 @@
+param whitelistedIPs string
+
 var rg = resourceGroup()
 var uniqueName = uniqueString(rg.id)
-var location =  rg.location
+var location = rg.location
 var tags = {
   'app-name': 'Langston-Wedding.com'
 }
@@ -11,6 +13,7 @@ module staticWebsite './modules/static-website.bicep' = {
     tags: tags
     uniqueName: uniqueName
     location: location
+    whitelistedIPs: whitelistedIPs
   }
 }
 
