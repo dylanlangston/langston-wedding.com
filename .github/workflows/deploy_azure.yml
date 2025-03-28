@@ -43,9 +43,9 @@ jobs:
               --name langston-wedding.com \
               --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
               --template-file ./Infrastructure/main.bicep \
+              --parameters whitelistedIPs=${{ steps.get_cloudflare_ips.outputs.cloudflare_ips }} \
               --action-on-unmanage deleteResources \
               --deny-settings-mode None
-              --parameters whitelistedIPs="${{ steps.get_cloudflare_ips.outputs.cloudflare_ips }}"
 
       - name: Get Deployment Outputs
         id: get_outputs
