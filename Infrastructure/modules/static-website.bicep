@@ -19,6 +19,7 @@ module staticWebSite 'br/public:avm/res/storage/storage-account:0.18.2' = {
     skuName: 'Standard_LRS'
     supportsHttpsTrafficOnly: true
     minimumTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
     networkAcls: {
       bypass: 'AzureServices'
       defaultAction: 'Deny'

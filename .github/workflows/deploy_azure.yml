@@ -94,7 +94,7 @@ jobs:
               --index-document Index.html \
               --404-document 404.html
 
-            az storage account update 
+            az storage account update \
               --name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
               --default-action Allow
 
@@ -105,7 +105,7 @@ jobs:
               --destination '$web' \
               --overwrite
 
-            az storage account update 
+            az storage account update \
               --name st${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
               --default-action Deny
 
