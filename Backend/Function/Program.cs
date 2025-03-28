@@ -12,6 +12,10 @@ builder.Configuration.AddJsonFile("./appsettings.json", false, true);
 builder.Services.AddSwaggerConfig();
 #endif
 
+builder.ConfigureFunctionsWebApplication();
+
+builder.UseMiddleware<ErrorHandlingMiddleware>();
+
 builder.Services
     .AddApplicationInsightsTelemetryWorkerService()
     .ConfigureFunctionsApplicationInsights();

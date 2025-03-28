@@ -17,6 +17,7 @@ module staticWebSite 'br/public:avm/res/storage/storage-account:0.18.2' = {
     supportsHttpsTrafficOnly: true
     minimumTlsVersion: 'TLS1_2'
     publicNetworkAccess: 'Enabled'
+    allowBlobPublicAccess: true
   }
 }
 
