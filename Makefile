@@ -23,7 +23,7 @@ test: clean ## Default Test Target.
 	@npm run test --prefix ./Frontend
 
 release: clean  ## Default Release Target. Builds Web Version for publish
-	@dotnet publish -c Release ./Backend/Function -o ./publish
+	@dotnet publish -c Release ./Backend/Function -r linux-x64 --self-contained false -o ./publish
 	@cd publish; mkdir out; zip -r ./out/functionapp.zip .; cd ..
 	@npm run build --prefix ./Frontend
 
