@@ -21,10 +21,10 @@ module staticWebSite 'br/public:avm/res/storage/storage-account:0.18.2' = {
     minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       bypass: 'AzureServices'
-      defaultAction: 'Allow'
-      ipRules: ipsToRuleArray(whitelistedIPs, 'Allow')
+      defaultAction: 'Deny'
+      ipRules: ipsToRuleArray(whitelistedIPs)
     }
   }
 }
 
-output staticWebsiteUrl string = staticWebSite.outputs.primaryBlobEndpoint
+output staticWebsiteUrl string = staticWebSite.outputs.serviceEndpoints.web

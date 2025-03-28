@@ -1,6 +1,6 @@
 @export()
-func ipsToRuleArray(ipsString string, actionString string) array =>
+func ipsToRuleArray(ipsString string) array =>
   map(split(ipsString, ','), ip => {
-    ipAddress: ip
-    action: actionString
+    value: ip
+    action: 'Allow'
   })
