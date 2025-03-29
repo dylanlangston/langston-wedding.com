@@ -1,3 +1,6 @@
+using Function.Configuration;
+using Function.Middleware;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +11,8 @@ var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("./appsettings.json", false, true);
 
+builder.AddConfigurationsFromAssembly(typeof(ConfigurationAttribute).Assembly);
+
 #if ADD_SWAGGER
 builder.Services.AddSwaggerConfig();
 #endif
@@ -15,6 +20,7 @@ builder.Services.AddSwaggerConfig();
 builder.ConfigureFunctionsWebApplication();
 
 builder.UseMiddleware<ErrorHandlingMiddleware>();
+builder.UseMiddleware<CorsMiddleware>();
 
 builder.Services
     .AddApplicationInsightsTelemetryWorkerService()

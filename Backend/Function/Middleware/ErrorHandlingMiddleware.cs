@@ -3,6 +3,8 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
+namespace Function.Middleware;
+
 public class ErrorHandlingMiddleware : IFunctionsWorkerMiddleware
 {
     private readonly ILogger<ErrorHandlingMiddleware> _logger;

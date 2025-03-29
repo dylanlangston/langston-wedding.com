@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Function
+namespace Function.Endpoints
 {
     public class Contact
     {
@@ -21,7 +21,7 @@ namespace Function
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "Bad request when JSON is invalid or email is incorrect")]
         #endif
         [Function("Contact")]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", "options")] HttpRequest req)
         {
             if (req.HasJsonContentType())
             {
@@ -37,7 +37,7 @@ namespace Function
 
                     if (!contactRequest.IsValidEmail) return new BadRequestObjectResult("Invalid Email Address");
 
-                    return new OkObjectResult($"Hello {contactRequest?.Name ?? "Unknown"}!");
+                    return new OkObjectResult($"Hello {contactRequest.Name}!");
                 }
                 catch (Exception err)
                 {
