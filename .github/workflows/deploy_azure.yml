@@ -32,7 +32,7 @@ jobs:
           IPS=$(curl https://api.cloudflare.com/client/v4/ips \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             | jq -r '.result.ipv4_cidrs|@csv')
-          echo "::set-output name=cloudflare_ips::$IPS"
+          echo "cloudflare_ips=$IPS" >> $GITHUB_OUTPUT
 
       - name: Deploy Bicep Template
         uses: azure/cli@v2
