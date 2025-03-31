@@ -25,7 +25,7 @@ public class ContactFunction : BaseFunction
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(MessageResponse), Description = "Bad request when JSON is invalid or email is incorrect")]
 #endif
     [Function("Contact")]
-    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", "options")] HttpRequest req, CancellationToken cancellation)
+    public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req, CancellationToken cancellation)
     {
         _logger.LogInformation("Contact submission request.");
 
