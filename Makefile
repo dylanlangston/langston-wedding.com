@@ -15,7 +15,7 @@ run-azurite:
 	@azurite --silent --loose --location ./azurite --debug ./azurite/debug.log
 
 develop-dotnet:
-	@cd Backend/Function;dotnet clean;dotnet watch
+	@cd ./Backend/src/Presentation/Functions/;dotnet clean;dotnet watch
 
 develop-backend: run-azurite develop-dotnet # Develop Backend
 
@@ -61,6 +61,6 @@ update-dotnet: # dotnet update
 	fi
 
 swagger: ## Generate swagger docs
-	@dotnet build --property DefineConstants="GENERATE_SWAGGER" ./Backend/Function
-	@cd ./Backend/Function/; dotnet ./bin/Debug/net9.0/Function.dll
+	@dotnet build --property GENERATE_SWAGGER='true' ./Backend/src/Presentation/Functions/Functions.csproj
+	@cd ./Backend/src/Presentation/Functions/; dotnet ./bin/Debug/net9.0/Functions.dll
 	@npm run swagger --prefix ./Frontend

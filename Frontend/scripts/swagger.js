@@ -3,7 +3,7 @@ import { generateApi } from 'swagger-typescript-api';
 
 const options = {
     output: path.resolve(process.cwd(), './src//lib/api'),
-    input: path.resolve(process.cwd(), '../Backend/Function/bin/Debug/net9.0/swagger.json'),
+    input: path.resolve(process.cwd(), '../Backend/src/Presentation/Functions/bin/Debug/net9.0/swagger.json'),
     modular: true,
     generateClient: true,
     cleanOutput: true,
