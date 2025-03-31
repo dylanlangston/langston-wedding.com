@@ -1,9 +1,7 @@
 using Microsoft.Azure.Functions.Worker.Middleware;
-using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Functions.Configuration;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.WebApiCompatShim;
 
 namespace Functions.Middleware;
 
@@ -29,16 +27,13 @@ public class CorsMiddleware : IFunctionsWorkerMiddleware
             return Task.CompletedTask;
         });
 
-        var httpRequest = httpContext.GetHttpRequestMessage();
-        if (httpRequest != null && httpRequest.Method == HttpMethod.Options)
+        var httpRequest = httpContext?.Request;
+        if (httpRequest != null && httpRequest.Method == HttpMethod.Options.Method)
         {
-            _logger.LogInformation($"Requested Options for `{httpRequest.RequestUri?.AbsolutePath}`");
+            _logger.LogInformation($"Requested Options for `{httpRequest.Path}`");
 
-            var response = httpRequest.CreateResponse(HttpStatusCode.InternalServerError);
+            httpContext!.Response.StatusCode = (int)HttpStatusCode.NoContent;
 
-            response.StatusCode = HttpStatusCode.NoContent;
-
-            context.GetInvocationResult().Value = response;
             return;
         }
 
