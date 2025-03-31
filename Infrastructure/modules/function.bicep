@@ -8,6 +8,8 @@ param functionAppName string = 'func${uniqueName}'
 param functionStorageAccountName string = 'funcst${uniqueName}'
 param serverFarmResourceId string
 
+param applicationInsightsResourceId string
+
 param domain string
 
 param cosmosDbAccountId string
@@ -41,6 +43,10 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
         {
           name: 'AzureWebJobsStorage'
           value: 'DefaultEndpointsProtocol=https;AccountName=${functionStorageAccountName};AccountKey=${listKeys(functionStorage.id, '2022-05-01').keys[0].value};EndpointSuffix=core.windows.net'
+        }
+        {
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: reference(applicationInsightsResourceId, '2020-02-02').InstrumentationKey
         }
         {
           name: 'FUNCTIONS_EXTENSION_VERSION'

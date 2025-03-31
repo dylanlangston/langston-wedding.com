@@ -5,6 +5,16 @@ param location string
 param tags tagsType
 
 param appServicePlanName string = 'plan${uniqueName}'
+param applicationInsightsName string = 'insight${uniqueName}'
+
+resource applicationInsight 'Microsoft.Insights/components@2020-02-02' = {
+  name: applicationInsightsName
+  location: location
+  properties: {
+    Application_Type: 'web'
+  }
+  kind: 'web'
+}
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appServicePlanName
@@ -21,3 +31,4 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
 }
 
 output serverFarmResourceId string = appServicePlan.id
+output applicationInsightsResourceId string = applicationInsight.id
