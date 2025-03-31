@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Json;
 using CrossCutting.Commands;
 using CrossCutting.Configuration;
 using CrossCutting.DomainEvents;
@@ -115,18 +116,21 @@ public static class DependencyInjectionExtensions
                 {
                     var configSection = builder.Configuration.GetSection(key);
 
+                    builder.Services.Configure<IConfigurationSection>(configSection);
                     // Call the builder.Services.Configure<T>(configSection) method
-                    var configureMethod = typeof(OptionsServiceCollectionExtensions).GetMethod(
-                        nameof(OptionsServiceCollectionExtensions.Configure),
+                    var configureMethod = typeof(OptionsConfigurationServiceCollectionExtensions).GetMethod(
+                        nameof(OptionsConfigurationServiceCollectionExtensions.Configure),
                         BindingFlags.Static | BindingFlags.Public,
-                        [typeof(IServiceCollection), typeof(IConfigurationSection)]
+                        [typeof(IServiceCollection), typeof(IConfiguration)]
                         );
-                    var configureMethodForType = configureMethod?.MakeGenericMethod(details.Type);
-                    configureMethodForType?.Invoke(null, [builder.Services, configSection]);
+                    var configureMethodForType = configureMethod!.MakeGenericMethod(details.Type);
+                    configureMethodForType!.Invoke(null, [builder.Services, configSection]);
+
+                    Console.WriteLine(key + " " + details.Type.FullName);
 
                     builder.Services.AddScoped(details.Type, sp =>
                     {
-                        var options = (IOptionsMonitor<object>)sp.GetRequiredService(typeof(IOptionsMonitor<>).MakeGenericType(details.Type));
+                        var options = (IOptionsMonitor<object>)sp.GetRequiredService(typeof(IOptionsMonitor<>).MakeGenericType(details.Type));                        
                         return options.CurrentValue;
                     });
                 }

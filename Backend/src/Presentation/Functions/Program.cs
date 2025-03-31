@@ -1,36 +1,35 @@
 using System.Reflection;
 using CrossCutting.Extensions;
-using Domain.Contact.Repositories;
 using Functions.Middleware;
 using Infrastructure.Persistence;
-using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
 #region Startup
 // References to our assemblies for DI
 Assembly[] assemblies = [
+    Assembly.GetExecutingAssembly(),
     Application.Assembly.Value,
     CrossCutting.Assembly.Value,
     Domain.Assembly.Value,
     Infrastructure.Assembly.Value
 ];
 
+// Add Configurations
+builder.AddConfigurations(assemblies);
+
 // Add appsettings.json file
 builder.Configuration.AddJsonFile("./appsettings.json", false, true);
 
 // Add Services
 builder.AddServices(assemblies);
-
-// Add Configurations
-builder.AddConfigurations(assemblies);
 
 // Add Commands/Queries
 builder.AddCQRSDispatchers(assemblies);
@@ -50,20 +49,26 @@ builder.AddDbContext<ApplicationDbContext, UnitOfWork>(options =>
 builder.Services.AddMemoryCache();
 #endif
 
-// builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-// builder.Services.AddScoped<IContactRequestRepository, ContactRequestRepository>();
-
 // Configure Source Based JSON serializers
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.TypeInfoResolverChain.Add(SourceGenerationContext.Default);
 });
 
+// Support Compression
+builder.Services.AddRequestDecompression();
+builder.Services.AddResponseCompression();
+
+// Support CORs
+
 // Azure Function Web App
 builder.ConfigureFunctionsWebApplication();
 
 // Generic Error Handling
 builder.UseMiddleware<ErrorHandlingMiddleware>();
+
+builder.UseMiddleware<CorsMiddleware>();
+
 
 // Application Insights
 builder.Services
