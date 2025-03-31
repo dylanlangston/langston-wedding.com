@@ -242,7 +242,7 @@ jobs:
             --certificate-thumbprint $THUMBPRINT \
             --ssl-type SNI
 
-          az functionapp cors add bind \
+          az functionapp cors add \
             --name func${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
             --allowed-origins ${{ secrets.CUSTOM_DOMAIN }}
