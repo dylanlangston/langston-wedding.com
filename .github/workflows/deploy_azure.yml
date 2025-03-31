@@ -44,6 +44,8 @@ jobs:
               --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
               --template-file ./Infrastructure/main.bicep \
               --parameters whitelistedIPs=${{ steps.get_cloudflare_ips.outputs.cloudflare_ips }} \
+              --parameters domain=${{ secrets.CUSTOM_DOMAIN }} \
+              --parameters apidomain=${{ secrets.CUSTOM_API_DOMAIN }} \
               --action-on-unmanage deleteResources \
               --deny-settings-mode None
 
@@ -241,8 +243,3 @@ jobs:
             --hostname ${{ secrets.CUSTOM_API_DOMAIN }} \
             --certificate-thumbprint $THUMBPRINT \
             --ssl-type SNI
-
-          az functionapp cors add \
-            --name func${{ needs.deploy-infrastructure.outputs.resourceSuffix }} \
-            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
-            --allowed-origins ${{ secrets.CUSTOM_DOMAIN }}

@@ -8,6 +8,11 @@ param functionAppName string = 'func${uniqueName}'
 param functionStorageAccountName string = 'funcst${uniqueName}'
 param serverFarmResourceId string
 
+param domain string
+
+param cosmosDbAccountId string
+param cosmosDbEndpoint string
+
 resource functionStorage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: functionStorageAccountName
   location: location
@@ -35,7 +40,7 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${functionStorageAccountName};AccountKey=${listKeys(functionStorage.id, '2022-05-01').keys[0].value};EndpointSuffix=core.windows.net'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${functionStorageAccountName};AccountKey=${listKeys(functionStorage.id, '2022-05-01').primaryMasterKey};EndpointSuffix=core.windows.net'
         }
         {
           name: 'FUNCTIONS_EXTENSION_VERSION'
@@ -45,10 +50,15 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
           name: 'FUNCTIONS_WORKER_RUNTIME'
           value: 'dotnet-isolated'
         }
+        {
+          name: 'CosmosDBConnectionString'
+          value: 'AccountEndpoint=${cosmosDbEndpoint};AccountKey=${listKeys(cosmosDbAccountId, '2021-04-15').primaryMasterKey}'
+        }
       ]
       cors: {
         allowedOrigins: [
           'https://portal.azure.com'
+          'https://${domain}'
         ]
       }
       use32BitWorkerProcess: false
