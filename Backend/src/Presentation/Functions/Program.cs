@@ -1,10 +1,12 @@
 using System.Reflection;
 using CrossCutting.Extensions;
+using Domain.Contact.Aggregates;
 using Functions.Middleware;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,6 +44,17 @@ builder.AddDbContext<ApplicationDbContext, UnitOfWork>(options =>
 {
 #if DEBUG
     options.UseInMemoryDatabase("DevelopmentDB");
+#else
+    options.UseCosmos(Environment.GetEnvironmentVariable("CosmosDBConnectionString")!, "Database");
+#endif
+}, assemblies);
+
+// Add Repos with config
+builder.AddRepositories((Type type, EntityTypeBuilder builder) =>
+{
+#if !DEBUG
+    builder.ToContainer(type.Name);
+    builder.HasPartitionKey(nameof(BaseEntity<Guid>.Id));
 #endif
 }, assemblies);
 

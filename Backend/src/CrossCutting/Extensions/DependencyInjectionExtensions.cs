@@ -9,6 +9,7 @@ using Domain.SharedKernel;
 using Domain.SharedKernel.CQRS;
 using Domain.SharedKernel.DomainEvents;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -101,6 +102,41 @@ public static class DependencyInjectionExtensions
         }
     }
 
+    public delegate void ConfigureRepositoryEntity(Type entityType, EntityTypeBuilder builder);
+    public static void AddRepositories(this IHostApplicationBuilder builder, ConfigureRepositoryEntity configureRepositoryEntity, params System.Reflection.Assembly[] assemblies)
+    {
+        var entityTypes = new List<Type>();
+        foreach (var assembly in assemblies)
+        {
+            var repositoriesTypes = assembly.GetExportedTypes()
+                    .Select(t => (Type: t, Interfaces: t.GetInterfaces().Where(i =>
+                        i.IsGenericType &&
+                        i.GetGenericTypeDefinition() == typeof(IRepository<,>))))
+                    .Where(t => !t.Type.IsAbstract && t.Interfaces.Any())
+                    .ToList();
+
+            // Add the first arugment (BaseEntity) to the entitesType
+            entityTypes.AddRange(
+                repositoriesTypes.SelectMany(
+                    t => t.Interfaces.Select(
+                        i => i.GenericTypeArguments.First())));
+        }
+
+        var configureModelBuilder = StartupTask<DbContext, ModelBuilder>.Create((
+            DbContext sender,
+            params IEnumerable<ModelBuilder?> models
+        ) =>
+        {
+            var modelBuilder = models.Single()!;
+
+            entityTypes.ForEach(repository =>
+            {
+                configureRepositoryEntity(repository, modelBuilder.Entity(repository));
+            });
+        });
+        builder.Services.AddSingleton(configureModelBuilder);
+    }
+
     public static void AddConfigurations(this IHostApplicationBuilder builder, params System.Reflection.Assembly[] assemblies)
     {
         foreach (var assembly in assemblies)
@@ -116,7 +152,6 @@ public static class DependencyInjectionExtensions
                 {
                     var configSection = builder.Configuration.GetSection(key);
 
-                    builder.Services.Configure<IConfigurationSection>(configSection);
                     // Call the builder.Services.Configure<T>(configSection) method
                     var configureMethod = typeof(OptionsConfigurationServiceCollectionExtensions).GetMethod(
                         nameof(OptionsConfigurationServiceCollectionExtensions.Configure),
@@ -126,11 +161,9 @@ public static class DependencyInjectionExtensions
                     var configureMethodForType = configureMethod!.MakeGenericMethod(details.Type);
                     configureMethodForType!.Invoke(null, [builder.Services, configSection]);
 
-                    Console.WriteLine(key + " " + details.Type.FullName);
-
                     builder.Services.AddScoped(details.Type, sp =>
                     {
-                        var options = (IOptionsMonitor<object>)sp.GetRequiredService(typeof(IOptionsMonitor<>).MakeGenericType(details.Type));                        
+                        var options = (IOptionsMonitor<object>)sp.GetRequiredService(typeof(IOptionsMonitor<>).MakeGenericType(details.Type));
                         return options.CurrentValue;
                     });
                 }

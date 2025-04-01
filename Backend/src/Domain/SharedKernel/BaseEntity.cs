@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using Domain.SharedKernel.DomainEvents;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.SharedKernel;
 
@@ -28,8 +30,11 @@ public abstract class BaseEntity
 }
 
 // BaseEntity Generic to support getting the various ID
+[PrimaryKey(nameof(Id))]
 public abstract class BaseEntity<TId> : BaseEntity, IEquatable<BaseEntity<TId>> where TId : IEquatable<TId>
 {
+    [Key]
+    [Required]
     public TId Id { get; protected set; }
 
     public new delegate void DomainEventHandler(BaseEntity<TId>? sender, IDomainEvent e);

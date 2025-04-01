@@ -39,6 +39,7 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
   properties: {
     serverFarmId: serverFarmResourceId
     siteConfig: {
+      functionAppScaleLimit: 1
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
