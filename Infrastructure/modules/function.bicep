@@ -60,6 +60,10 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
           name: 'CosmosDBConnectionString'
           value: 'AccountEndpoint=${cosmosDbEndpoint};AccountKey=${listKeys(cosmosDbAccountId, '2021-04-15').primaryMasterKey}'
         }
+        {
+          name: 'AzureWebJobsDisableHomepage'
+          value: 'true'
+        }
       ]
       cors: {
         supportCredentials: true

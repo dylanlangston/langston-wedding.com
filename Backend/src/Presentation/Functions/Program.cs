@@ -67,9 +67,6 @@ builder.ConfigureFunctionsWebApplication();
 // Generic Error Handling
 builder.UseMiddleware<ErrorHandlingMiddleware>();
 
-builder.UseMiddleware<CorsMiddleware>();
-
-
 // Application Insights
 builder.Services
     .AddApplicationInsightsTelemetryWorkerService()

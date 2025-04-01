@@ -48,7 +48,7 @@ module function './modules/function.bicep' = {
     location: location
     serverFarmResourceId: appServicePlan.outputs.serverFarmResourceId
     applicationInsightsResourceId: appServicePlan.outputs.applicationInsightsResourceId
-    domain: apidomain
+    domain: domain
     cosmosDbAccountId: cosmosdb.outputs.cosmosdbAccountId
     cosmosDbEndpoint: cosmosdb.outputs.cosmosdbAccountEndpoint
   }
