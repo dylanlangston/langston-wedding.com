@@ -4,23 +4,28 @@ public enum ServiceRegistrationType
 {
     Scoped,
     Transient,
-    Singleton
+    Singleton,
+    Background
 }
 
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = true, Inherited = false)]
-public class ServiceAttribute<T> : Attribute where T : class
+public class ServiceAttribute : Attribute
 {
     public ServiceAttribute(ServiceRegistrationType registrationType = ServiceRegistrationType.Scoped)
     {
-        var @type = typeof(T);
-        if (!@type.IsInterface)
-        {
-            throw new Exception("ServiceAttribute can only be used with interfaces.");
-        }
         RegistrationType = registrationType;
-        InterfaceType = @type;
     }
 
     public ServiceRegistrationType RegistrationType { get; private init; }
+}
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = true, Inherited = false)]
+public class ServiceAttribute<T> : ServiceAttribute where T : class
+{
+    public ServiceAttribute(ServiceRegistrationType registrationType = ServiceRegistrationType.Scoped) : base(registrationType)
+    {
+        var @type = typeof(T);
+        InterfaceType = @type;
+    }
+
     public Type InterfaceType { get; private init; }
 }

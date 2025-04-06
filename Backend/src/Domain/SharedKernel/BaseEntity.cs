@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Domain.SharedKernel.DomainEvents;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,26 +9,54 @@ namespace Domain.SharedKernel;
 // Abstract BaseEntity type which supports domain events
 public abstract class BaseEntity
 {
-    private readonly List<IDomainEvent> _domainEvents = new();
-    public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    private List<DomainEvent> _domainEvents = new();
 
-    public delegate void DomainEventHandler(BaseEntity? sender, IDomainEvent e);
+    private void EnsureDomainEventsListExists()
+    {
+        // This happens when RuntimeHelpers.GetUninitializedObject is used to create a BaseEntity
+        // This check ensures that events can still be dispacted for this type
+        if (_domainEvents == null)
+        {
+            _domainEvents = new();
+        }
+    }
+
+    [NotMapped]
+    [JsonIgnore]
+    public IReadOnlyList<DomainEvent> DomainEvents
+    {
+        get
+        {
+            EnsureDomainEventsListExists();
+            return _domainEvents.AsReadOnly();
+        }
+    }
+
+    public delegate void DomainEventHandler(BaseEntity? sender, DomainEvent e);
     protected static event DomainEventHandler? DomainEventRaised;
 
     protected BaseEntity() { }
 
-    protected void RaiseDomainEvent(IDomainEvent domainEvent)
+    public void RaiseDomainEvent(DomainEvent domainEvent)
     {
+        domainEvent.EnsureDescription();
+
+        EnsureDomainEventsListExists();
         _domainEvents.Add(domainEvent);
         DomainEventRaised?.Invoke(this, domainEvent);
     }
 
-    public void RemoveDomainEvent(IDomainEvent domainEvent)
+    public void RemoveDomainEvent(DomainEvent domainEvent)
     {
+        EnsureDomainEventsListExists();
         _domainEvents.Remove(domainEvent);
     }
 
-    public void ClearDomainEvents() => _domainEvents.Clear();
+    public void ClearDomainEvents()
+    {
+        EnsureDomainEventsListExists();
+        _domainEvents.Clear();
+    }
 }
 
 // BaseEntity Generic to support getting the various ID
@@ -34,12 +64,11 @@ public abstract class BaseEntity
 public abstract class BaseEntity<TId> : BaseEntity, IEquatable<BaseEntity<TId>> where TId : IEquatable<TId>
 {
     [Key]
-    [Required]
-    public TId Id { get; protected set; }
+    public TId Id { get; protected init; }
 
     public new delegate void DomainEventHandler(BaseEntity<TId>? sender, IDomainEvent e);
 
-    protected BaseEntity() { }
+    private BaseEntity() { }
 
     protected BaseEntity(TId id)
     {

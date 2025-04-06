@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Functions.DTOs;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Application.Contact.Commands;
 
@@ -13,8 +12,9 @@ public class ContactFunction : BaseFunction
     public ContactFunction(
         ILogger<ContactFunction> logger,
         ICommandDispatcher commandDispatcher,
-        IQueryDispatcher queryDispatcher
-        ) : base(logger, commandDispatcher, queryDispatcher)
+        IQueryDispatcher queryDispatcher,
+        JsonSerializerOptions jsonSerializerOptions
+        ) : base(logger, commandDispatcher, queryDispatcher, jsonSerializerOptions)
     {
     }
 

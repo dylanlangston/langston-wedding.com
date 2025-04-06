@@ -6,6 +6,8 @@
     <Project Path="src/Infrastructure/Infrastructure.csproj" />
   </Folder>
   <Folder Name="/src/Presentation/">
+    <Project Path="src/Presentation/Console/Console.csproj" />
+    <Project Path="src/Presentation/Core/Core.csproj" />
     <Project Path="src/Presentation/Functions/Functions.csproj" />
   </Folder>
   <Folder Name="/tests/">

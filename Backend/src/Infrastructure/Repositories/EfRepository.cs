@@ -1,12 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Persistence;
+using Domain.SharedKernel.Repositories;
 
 namespace Infrastructure.Repositories
 {
     /// <summary>
     /// Generic repository implementation using EF Core.
     /// </summary>
-    public abstract class EfRepository<T, TId> : IRepository<T, TId>
+    public abstract class EfRepository<T, TId> : IReadRepository<T,TId>, IWriteRepository<T, TId>
         where T : BaseEntity<TId>
         where TId : IEquatable<TId>
     {

@@ -5,12 +5,18 @@ namespace Infrastructure.Persistence;
 
 public class UnitOfWork : IUnitOfWork
 {
+    private readonly SemaphoreSlim _saveChangesLock = new SemaphoreSlim(1, 1);
+
     private readonly DbContext _dbContext;
-    IDomainEventDispatcher _domainEventDispatcher;
-    public UnitOfWork(DbContext dbContext, IDomainEventDispatcher domainEventDispatcher)
+    IDomainEventQueue _domainEventQueue;
+
+    public UnitOfWork(DbContext dbContext, IDomainEventQueue domainEventQueue)
     {
         _dbContext = dbContext;
-        _domainEventDispatcher = domainEventDispatcher;
+        _domainEventQueue = domainEventQueue;
+
+        // List to the Save Requested Event to ensure we save outside of DI
+        IUnitOfWork.SaveRequestedRaised += (out Task task) => task = SaveChangesAsync();
     }
 
     public void Dispose()
@@ -23,28 +29,43 @@ public class UnitOfWork : IUnitOfWork
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        // Domain Events are dispatched when a unit of work is complete
-        await DispatchDomainEventsAsync(cancellationToken);
+        var domainEvents = TrackDomainEvents();
 
-        return await _dbContext.SaveChangesAsync(cancellationToken);
+        int saveResult = -1;
+        bool lockTaken = false;
+        try
+        {
+            await _saveChangesLock.WaitAsync(cancellationToken);
+            lockTaken = true;
+
+            saveResult = await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+        finally
+        {
+            if (lockTaken) _saveChangesLock.Release();
+        }
+
+        // Domain Events are dispatched in background when a unit of work is complete (saved)
+        // This ensures they don't block and are processed async 
+        domainEvents?.ForEach(async domainEvent => await _domainEventQueue.EnqueueAsync(domainEvent));
+
+        return saveResult;
     }
 
-    private async Task DispatchDomainEventsAsync(CancellationToken cancellationToken)
+    private List<DomainEvent>? TrackDomainEvents()
     {
-        var domainEntities = _dbContext.ChangeTracker
-            .Entries<BaseEntity>()
-            .Where(x => x.Entity.DomainEvents.Any());
+        var entries = _dbContext.ChangeTracker
+            .Entries();
+        var domainEntities = entries
+            .Where(x => x.Entity.GetType().IsAssignableTo(typeof(BaseEntity)) && (x.Entity as BaseEntity)!.DomainEvents.Any());
 
         var domainEvents = domainEntities
-            .SelectMany(x => x.Entity.DomainEvents)
+            .SelectMany(x => (x.Entity as BaseEntity)!.DomainEvents)
             .ToList();
 
         domainEntities.ToList()
-            .ForEach(entity => entity.Entity.ClearDomainEvents());
+            .ForEach(x => (x.Entity as BaseEntity)!.ClearDomainEvents());
 
-        foreach (var domainEvent in domainEvents)
-        {
-            await _domainEventDispatcher.Dispatch(domainEvent, cancellationToken);
-        }
+        return domainEvents;
     }
 }

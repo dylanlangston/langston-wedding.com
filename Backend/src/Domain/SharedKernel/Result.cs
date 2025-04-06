@@ -29,7 +29,7 @@ public class Result
     public static Result Success() => new Result(true);
     public static Result<T> Success<T>(T value) => new Result<T>(value, true);
 
-    public static Result Failure(string error) => new Result(false, error);
+    public static Result Failure(string error) => new Result(false, error: error);
 
     public static Result<T> Failure<T>(string error) => new Result<T>(default, false, error);
 
@@ -48,6 +48,8 @@ public class Result
 
         return Failure(combinedError);
     }
+
+    public static implicit operator Task<Result>(Result result) => Task.FromResult(result);
 }
 
 public class Result<T> : Result
