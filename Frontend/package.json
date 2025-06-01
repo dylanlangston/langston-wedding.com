@@ -22,7 +22,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.7",
     "@mui/material": "^6.4.7",
-    "@mui/x-data-grid": "^8.2.0",
+    "@mui/x-data-grid": "^8.5.0",
     "browser-dtector": "^4.1.0",
     "framer-motion": "^12.9.4",
     "i18next": "^25.0.2",
