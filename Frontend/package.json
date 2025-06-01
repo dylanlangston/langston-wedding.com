@@ -53,7 +53,7 @@
     "swagger-typescript-api": "^13.1.1",
     "typescript": "^5.8.3",
     "vite": "^6.3.4",
-    "vite-plugin-checker": "^0.9.1",
+    "vite-plugin-checker": "^0.9.3",
     "vitest": "^3.1.2",
     "zlib": "^1.0.5"
   }
