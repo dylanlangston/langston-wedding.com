@@ -19,7 +19,7 @@ jobs:
       resourceSuffix: ${{ steps.get_outputs.outputs.resourceSuffix }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Log in to Azure
         uses: azure/login@v2
